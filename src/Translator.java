@@ -1,12 +1,14 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.regex.*;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.IOException;
+
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
 
@@ -32,19 +34,26 @@ public class Translator {
 		Translator translator = new Translator();
 		while ((sentence = reader.readLine()) != null) {
 			String[] spanishWords = translator.tokenize(sentence);
-			System.out.println(Arrays.toString(translator.posTag(spanishWords)));
 			translator.directTranslate(sentence);
 		}
 	}
 
 	public String[] tokenize(String sentence) {
 		String[] words = sentence.split("\\s");
-		String[] tokenized = new String[words.length];
+		ArrayList<String> tokenized = new ArrayList<String>();
 		for (int i=0; i < words.length; i++) {
-			String strippedWord = words[i].replaceFirst("^[ï¿½\",\\.]+", "").replaceAll("[\"\\.,?`:]+$", "").toLowerCase();
-			tokenized[i] = strippedWord;
+			Pattern p = Pattern.compile("(^[\"¿,\\.]*)([^\"¿?,\\.]+)([\"\\.,?:]*$)");
+			Matcher m = p.matcher(words[i]);
+			while(m.find()) {
+				for (int j = 1; j < 4; j++) {
+					if (!m.group(j).equals("")) {
+						tokenized.add(m.group(j));
+					}
+				}
+			}
 		}
-		return tokenized;
+		String[] arr = new String[tokenized.size()];
+		return tokenized.toArray(arr);
 	}
 	
 	public void directTranslate(String spanishSentence) {
@@ -52,14 +61,16 @@ public class Translator {
 		String[] englishWords = new String[spanishWords.length];
 		for (int i = 0; i < spanishWords.length; i++) {
 			String spanishWord = spanishWords[i];
-			String englishWord = dictionary.get(spanishWord);
+			String englishWord = dictionary.get(spanishWord.toLowerCase());
 			if (englishWord != null) {
 				englishWords[i] = englishWord;
 			} else {
 				englishWords[i] = spanishWords[i];
+//				System.out.println(spanishWord);
 			}
 		}
-		//System.out.println(Arrays.toString(englishWords));
+//		System.out.println(Arrays.toString(translator.posTag(spanishWords)));
+		System.out.println(Arrays.toString(englishWords));
 	}
 	
 	public String[] posTag(String[] spanishWords) {
