@@ -286,6 +286,7 @@ public class SpanishEnglishDictionary {
 		map.put("ucrania", "Ukraine");
 		map.put("estados", "States");
 		map.put("unidos", "United");
+		map.put("alicia", "Alice");
 		return map;
 	}
 }
