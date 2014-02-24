@@ -1,6 +1,16 @@
+/bin/
+
 *.class
 
 # Package Files #
 *.jar
 *.war
 *.ear
+
+# Eclipse #
+.metadata
+.project
+bin/**
+.classpath
+.settings/
+.loadpath
