@@ -1,1 +1,0 @@
-this is a useless text file that Stephen is using to see if he knows how to use git
