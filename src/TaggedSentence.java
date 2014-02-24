@@ -1,6 +1,12 @@
 import java.util.Collections;
 import java.util.ArrayList;
 
+/*
+ * Initialize this with something like:
+ * taggedSentence = new TaggedSentence(wordArray, POSArray);
+ * where wordArray and POSArray are arrays of translated words and corresponding
+ * tagged parts of speech.
+ */
 public class TaggedSentence{
 	public class TaggedWord {
 		public String word;
