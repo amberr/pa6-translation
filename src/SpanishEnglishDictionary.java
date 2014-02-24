@@ -283,9 +283,10 @@ public class SpanishEnglishDictionary {
 		map.put("últimas", "last"); // latest, most recent; adj or noun; feminine plural
 		map.put("últimos", "last"); // latest, most recent; adj or noun; masculine plural
 		map.put("útiles", "tools");
-		map.put("Ucrania", "Ukraine");
-		map.put("Estados", "States");
-		map.put("Unidos", "United");
+		map.put("ucrania", "Ukraine");
+		map.put("estados", "States");
+		map.put("unidos", "United");
+		map.put("alicia", "Alice");
 		return map;
 	}
 }
