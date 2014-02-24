@@ -24,16 +24,14 @@ public class Translator {
 	private static void translate(String[] spanishWords, HashMap<String, String> dictionary) {
 		String[] englishWords = new String[spanishWords.length];
 		for (int i = 0; i < spanishWords.length; i++) {
-			String spanishWord = spanishWords[i].replaceFirst("^[^a-zA-Z]+", "").replaceAll("[^a-zA-Z]+$", "").toLowerCase();
+			String spanishWord = spanishWords[i].replaceFirst("^[¿\",\\.]+", "").replaceAll("[\"\\.,?`:]+$", "").toLowerCase();
 			String englishWord = dictionary.get(spanishWord);
 			if (englishWord != null) {
 				englishWords[i] = englishWord;
 			} else {
-				System.out.println(spanishWords[i]);
 				englishWords[i] = spanishWords[i];
 			}
 		}
-//		System.out.println(Arrays.toString(englishWords));
-		
+		System.out.println(Arrays.toString(englishWords));
 	}
 }
