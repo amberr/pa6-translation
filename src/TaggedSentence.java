@@ -40,13 +40,15 @@ public class TaggedSentence{
 		}
 	}
 	
-	public String sentence() {
-		StringBuilder sb = new StringBuilder();
+	/*
+	 * Returns sentence as a string array.
+	 */
+	public String[] sentence() {
+		ArrayList<String> out = new ArrayList<String>();
 		for (TaggedWord tWord : sentence) {
-			sb.append(tWord.word);
-			sb.append(" ");
+			out.add(tWord.word);
 		}
-		return sb.toString();
+		return out.toArray(new String[out.size()]);
 	}
 	
 	public static void main(String[] args) {
@@ -54,6 +56,6 @@ public class TaggedSentence{
 		String[] POSArray = new String[] {"A", "B", "C", "A", "B"};
 		TaggedSentence taggedSentence = new TaggedSentence(wordArray, POSArray);
 		taggedSentence.swapAllAdjacent("A", "B");
-		System.out.println(taggedSentence.sentence());
+		System.out.println(Arrays.toString(taggedSentence.sentence()));
 	}
 }
