@@ -59,15 +59,10 @@ public class Translator {
 				englishWords[i] = spanishWords[i];
 			}
 		}
-<<<<<<< HEAD
-		System.out.println(Arrays.toString(englishWords));
-		
-=======
 		//System.out.println(Arrays.toString(englishWords));
 	}
 	
 	public String[] posTag(String[] spanishWords) {
 		return posTagger.tag(spanishWords);
->>>>>>> refs/remotes/origin/master
 	}
 }
