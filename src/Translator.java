@@ -33,7 +33,7 @@ public class Translator {
 				englishWords[i] = spanishWords[i];
 			}
 		}
-//		System.out.println(Arrays.toString(englishWords));
+		System.out.println(Arrays.toString(englishWords));
 		
 	}
 }
