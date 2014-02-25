@@ -8,22 +8,6 @@ import java.util.HashMap;
 
 public class SpanishEnglishDictionary {
 	
-	
-	// Useful for making dictionary, keeping for now
-//		public static void readFile() throws IOException {
-//			Set<String> words = new TreeSet<String>();
-//			BufferedReader reader = new BufferedReader(new FileReader("sentences.txt"));
-//			String line = null;
-//			while ((line = reader.readLine()) != null) {
-//			    String[] parts = line.split("\\s");
-//			    for (int i=0; i<parts.length; i++) {
-//			    	words.add(parts[i]);
-//			    }
-//			}
-//			System.out.print(words);
-//		}
-		
-	
 	public HashMap<String, String> dictionary() {
 		
 		/* Set of words:

@@ -19,12 +19,15 @@ public class TaggedSentence{
 		}
 	}
 	
-	ArrayList<TaggedWord> sentence;
+	ArrayList<TaggedWord> englishSentence;
+	ArrayList<String> spanishSentence;
 	
-	public TaggedSentence(String[] wordArr, String[] posArr) {
-		sentence = new ArrayList<TaggedWord>();
-		for (int i=0; i < Math.min(wordArr.length, posArr.length); i++) {
-			sentence.add(new TaggedWord(wordArr[i], posArr[i]));
+	public TaggedSentence(String[] spanishWordArr, String[] englishWordArr, String[] posArr) {
+		englishSentence = new ArrayList<TaggedWord>();
+		spanishSentence = new ArrayList<String>();
+		for (int i=0; i < Math.min(englishWordArr.length, posArr.length); i++) {
+			englishSentence.add(new TaggedWord(englishWordArr[i], posArr[i]));
+			spanishSentence.add(spanishWordArr[i]);
 		}
 	}
 	
@@ -33,9 +36,9 @@ public class TaggedSentence{
 	 * to the entire sentence, swapping any adjacent words matching the rule.
 	 */
 	public void swapAllAdjacent(String pos1, String pos2) {
-		for (int i=0; i < sentence.size()-1; i++) {
-			if (sentence.get(i).pos == pos1 && sentence.get(i+1).pos == pos2) {
-				Collections.swap(sentence, i, i+1);
+		for (int i=0; i < englishSentence.size()-1; i++) {
+			if (englishSentence.get(i).pos == pos1 && englishSentence.get(i+1).pos == pos2) {
+				Collections.swap(englishSentence, i, i+1);
 			}
 		}
 	}
@@ -45,17 +48,18 @@ public class TaggedSentence{
 	 */
 	public String[] sentence() {
 		ArrayList<String> out = new ArrayList<String>();
-		for (TaggedWord tWord : sentence) {
+		for (TaggedWord tWord : englishSentence) {
 			out.add(tWord.word);
 		}
 		return out.toArray(new String[out.size()]);
 	}
 	
-	public static void main(String[] args) {
-		String[] wordArray = new String[] {"Hello", "I", "am", "a", "sentence"};
-		String[] POSArray = new String[] {"A", "B", "C", "A", "B"};
-		TaggedSentence taggedSentence = new TaggedSentence(wordArray, POSArray);
-		taggedSentence.swapAllAdjacent("A", "B");
-		System.out.println(Arrays.toString(taggedSentence.sentence()));
-	}
+//	public static void main(String[] args) {
+//		String[] englishWordArray = new String[] {"Hello", "I", "am", "a", "sentence"};
+//		String[] spanishWordArray = new String[] {"Hola", "yo", "soy", "una", "oración"};
+//		String[] POSArray = new String[] {"A", "B", "C", "A", "B"};
+//		TaggedSentence taggedSentence = new TaggedSentence(spanishWordArray, englishWordArray, POSArray);
+//		taggedSentence.swapAllAdjacent("A", "B");
+//		System.out.println(Arrays.toString(taggedSentence.sentence()));
+//	}
 }
