@@ -39,7 +39,6 @@ public class TaggedSentence{
 			if (posArr[i] == "Fit") {
 				question = true;
 			}
-		}
 	}
 	
 	public TaggedSentence(String[] spanishArr, String[] posArr) {
@@ -114,7 +113,7 @@ public class TaggedSentence{
 		return out.toArray(new String[out.size()]);
 	}
 	
-	public String[] posList() {
+	public String[] tags() {
 		ArrayList<String> out = new ArrayList<String>();
 		for (TaggedWord tWord : sentence) {
 			out.add(tWord.pos);
@@ -135,5 +134,14 @@ public class TaggedSentence{
 		b.add("B");
 		taggedSentence.swapAllAdjacent(a,b);
 		System.out.println(Arrays.toString(taggedSentence.sentence()));
-	}
+
+  }
+//	public static void main(String[] args) {
+//		String[] englishWordArray = new String[] {"Hello", "I", "am", "a", "sentence"};
+//		String[] spanishWordArray = new String[] {"Hola", "yo", "soy", "una", "oración"};
+//		String[] POSArray = new String[] {"A", "B", "C", "A", "B"};
+//		TaggedSentence taggedSentence = new TaggedSentence(spanishWordArray, englishWordArray, POSArray);
+//		taggedSentence.swapAllAdjacent("A", "B");
+//		System.out.println(Arrays.toString(taggedSentence.sentence()));
+//	}
 }

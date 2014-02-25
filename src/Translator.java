@@ -22,6 +22,30 @@ public class Translator {
 		dictionary = new SpanishEnglishDictionary().dictionary();
 	}
 	
+	private static void applyStrategies(TaggedSentence taggedSentence) {
+		// apply all of the strategies!
+		taggedSentence.swapAllAdjacent("NC", "AQ");
+		System.out.println(Arrays.toString(taggedSentence.sentence()));
+	}
+
+	public String[] tokenize(String sentence) {
+		String[] words = sentence.split("\\s");
+		ArrayList<String> tokenized = new ArrayList<String>();
+		for (int i=0; i < words.length; i++) {
+			Pattern p = Pattern.compile("(^[\"¿,\\.]*)([^\"¿?,\\.]+)([\"\\.,?:]*$)");
+			Matcher m = p.matcher(words[i]);
+			while(m.find()) {
+				for (int j = 1; j < 4; j++) {
+					if (!m.group(j).equals("")) {
+						tokenized.add(m.group(j));
+					}
+				}
+			}
+		}
+		String[] arr = new String[tokenized.size()];
+		return tokenized.toArray(arr);
+	}
+	
 	public void directTranslate(TaggedSentence tsentence) {
 		String[] spanishWords = tsentence.sentence();
 		String[] englishWords = new String[spanishWords.length];
