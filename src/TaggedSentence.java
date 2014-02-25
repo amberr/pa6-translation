@@ -37,7 +37,7 @@ public class TaggedSentence{
 	 */
 	public void swapAllAdjacent(String pos1, String pos2) {
 		for (int i=0; i < englishSentence.size()-1; i++) {
-			if (englishSentence.get(i).pos == pos1 && englishSentence.get(i+1).pos == pos2) {
+			if (englishSentence.get(i).pos.equals(pos1) && englishSentence.get(i+1).pos.equals(pos2)) {
 				Collections.swap(englishSentence, i, i+1);
 			}
 		}
@@ -50,6 +50,14 @@ public class TaggedSentence{
 		ArrayList<String> out = new ArrayList<String>();
 		for (TaggedWord tWord : englishSentence) {
 			out.add(tWord.word);
+		}
+		return out.toArray(new String[out.size()]);
+	}
+	
+	public String[] tags() {
+		ArrayList<String> out = new ArrayList<String>();
+		for (TaggedWord tWord : englishSentence) {
+			out.add(tWord.pos);
 		}
 		return out.toArray(new String[out.size()]);
 	}

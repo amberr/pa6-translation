@@ -40,12 +40,16 @@ public class Translator {
 			String[] spanishWords = translator.tokenize(sentence);
 			TaggedSentence taggedSentence = translator.directTranslate(sentence);
 			System.out.println(Arrays.toString(taggedSentence.sentence()));
+			System.out.println(Arrays.toString(taggedSentence.tags()));
 			applyStrategies(taggedSentence);
 		}
 	}
 
 	private static void applyStrategies(TaggedSentence taggedSentence) {
 		// apply all of the strategies!
+		taggedSentence.swapAllAdjacent("NC", "AQ");
+		System.out.println(Arrays.toString(taggedSentence.sentence()));
+		
 		
 	}
 
