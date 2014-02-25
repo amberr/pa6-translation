@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.regex.*;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -19,9 +20,33 @@ public class Translator {
 	
 	public Translator() throws Exception {
 		dictionary = new SpanishEnglishDictionary().dictionary();
-		InputStream modelIn = new FileInputStream("opennlp-es-pos-maxent-pos-universal.model");
-		POSModel posModel = new POSModel(modelIn);
-		posTagger = new POSTaggerME(posModel);
+	}
+	
+	public void directTranslate(TaggedSentence tsentence) {
+		String[] spanishWords = tsentence.sentence();
+		String[] englishWords = new String[spanishWords.length];
+		for (int i = 0; i < spanishWords.length; i++) {
+			String spanishWord = spanishWords[i];
+			String englishWord = dictionary.get(spanishWord.toLowerCase());
+			if (englishWord != null) {
+				englishWords[i] = englishWord;
+			} else {
+				englishWords[i] = spanishWords[i];
+				//System.out.println(spanishWord);
+			}
+		}
+		//System.out.println(Arrays.toString(englishWords));
+		tsentence.addEnglishWords(englishWords);
+	}
+	
+	public void switchAdjNouns(TaggedSentence tsentence) {
+		HashSet<String> nounSet = new HashSet<String>();
+		nounSet.add("NC");
+		nounSet.add("NP");
+
+		HashSet<String> adjSet = new HashSet<String>();
+		adjSet.add("AQ");
+		tsentence.swapAllAdjacent(nounSet, adjSet);
 	}
 	
 	public static void main(String[] args) throws Exception {
@@ -32,48 +57,16 @@ public class Translator {
 		BufferedReader reader = new BufferedReader(new FileReader("dev_sentences.txt"));
 		String sentence = null;
 		Translator translator = new Translator();
+		Preprocessor pp = new Preprocessor();
 		while ((sentence = reader.readLine()) != null) {
-			String[] spanishWords = translator.tokenize(sentence);
-			translator.directTranslate(sentence);
+			TaggedSentence tsentence = pp.process(sentence);
+			System.out.println(Arrays.toString(tsentence.sentence()));
+			System.out.println(Arrays.toString(tsentence.posList()));
+			translator.directTranslate(tsentence);
+			translator.switchAdjNouns(tsentence);
+			System.out.println(Arrays.toString(tsentence.translation()));
+			System.out.println("-------------------------------\n-------------------------------");
 		}
-	}
-
-	public String[] tokenize(String sentence) {
-		String[] words = sentence.split("\\s");
-		ArrayList<String> tokenized = new ArrayList<String>();
-		for (int i=0; i < words.length; i++) {
-			Pattern p = Pattern.compile("(^[\"¿,\\.]*)([^\"¿?,\\.]+)([\"\\.,?:]*$)");
-			Matcher m = p.matcher(words[i]);
-			while(m.find()) {
-				for (int j = 1; j < 4; j++) {
-					if (!m.group(j).equals("")) {
-						tokenized.add(m.group(j));
-					}
-				}
-			}
-		}
-		String[] arr = new String[tokenized.size()];
-		return tokenized.toArray(arr);
-	}
-	
-	public void directTranslate(String spanishSentence) {
-		String[] spanishWords = tokenize(spanishSentence);
-		String[] englishWords = new String[spanishWords.length];
-		for (int i = 0; i < spanishWords.length; i++) {
-			String spanishWord = spanishWords[i];
-			String englishWord = dictionary.get(spanishWord.toLowerCase());
-			if (englishWord != null) {
-				englishWords[i] = englishWord;
-			} else {
-				englishWords[i] = spanishWords[i];
-//				System.out.println(spanishWord);
-			}
-		}
-//		System.out.println(Arrays.toString(translator.posTag(spanishWords)));
-		System.out.println(Arrays.toString(englishWords));
-	}
-	
-	public String[] posTag(String[] spanishWords) {
-		return posTagger.tag(spanishWords);
+		reader.close();
 	}
 }
