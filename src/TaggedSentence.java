@@ -3,7 +3,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 
 /*
  * Initialize this with something like:
@@ -39,6 +38,7 @@ public class TaggedSentence{
 			if (posArr[i] == "Fit") {
 				question = true;
 			}
+		}
 	}
 	
 	public TaggedSentence(String[] spanishArr, String[] posArr) {
@@ -138,7 +138,7 @@ public class TaggedSentence{
   }
 //	public static void main(String[] args) {
 //		String[] englishWordArray = new String[] {"Hello", "I", "am", "a", "sentence"};
-//		String[] spanishWordArray = new String[] {"Hola", "yo", "soy", "una", "oración"};
+//		String[] spanishWordArray = new String[] {"Hola", "yo", "soy", "una", "oraciï¿½n"};
 //		String[] POSArray = new String[] {"A", "B", "C", "A", "B"};
 //		TaggedSentence taggedSentence = new TaggedSentence(spanishWordArray, englishWordArray, POSArray);
 //		taggedSentence.swapAllAdjacent("A", "B");
