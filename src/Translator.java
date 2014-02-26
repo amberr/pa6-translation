@@ -119,17 +119,37 @@ public class Translator {
 		for(int i = 0; i < taggedSentence.length(); i++) {
 			if(taggedSentence.getSpanish(i).equals("que")) {
 				HashSet<String> comparisonWords = new HashSet<String>();
-				comparisonWords.add("mï¿½s");
+				comparisonWords.add("más");
 				comparisonWords.add("menos");
-				if (i > 0 && comparisonWords.contains(taggedSentence.getSpanish(i-1))) {
-					taggedSentence.setEnglish(i, "than");
-				} else if (i > 1 && comparisonWords.contains(taggedSentence.getSpanish(i-2))) {
+				if ((i > 0 && comparisonWords.contains(taggedSentence.getSpanish(i-1))) ||
+					(i > 1 && comparisonWords.contains(taggedSentence.getSpanish(i-2)))) {
 					taggedSentence.setEnglish(i, "than");
 				}
 			}
 		}
 	}
 	
+	public void detectCommonPhrases(TaggedSentence taggedSentence) {
+		for(int i = 0; i < taggedSentence.length(); i++) {
+			String word = taggedSentence.getSpanish(i);
+			if(word.equals("embargo")) {
+				if(i > 0 && taggedSentence.getSpanish(i - 1).equals("sin")) {
+					taggedSentence.setEnglish(i-1, ""); // not deleting, so future loops don't get tripped up
+					taggedSentence.setEnglish(i, "however");
+				}
+			} else if(word.toLowerCase().equals("debido")) {
+				if(i < taggedSentence.length() - 1 && taggedSentence.getSpanish(i + 1).equals("a")) {
+					taggedSentence.setEnglish(i, "due");
+					taggedSentence.setEnglish(i+1, "to");
+				} else if (i < taggedSentence.length() - 1 && taggedSentence.getSpanish(i + 1).equals("al")) {
+					taggedSentence.setEnglish(i, "due");
+					taggedSentence.setEnglish(i+1, "to the");	
+				}
+				
+			}
+		}
+	}
+				
 	private void fixInfinitive(TaggedSentence tsentence) {
 		HashSet<String> prepositionSet = new HashSet<String>();
 		prepositionSet.add("SP");
@@ -197,6 +217,7 @@ public class Translator {
 	public void applyStrategies(TaggedSentence taggedSentence) {
 		// apply all of the strategies!
 		resolveQueAmbiguity(taggedSentence);
+		detectCommonPhrases(taggedSentence);
 		switchAdjNouns(taggedSentence);
 		switchNegation(taggedSentence);
 		switchObjVerbs(taggedSentence);
@@ -239,6 +260,7 @@ public class Translator {
 			translator.directTranslate(tsentence);
 			translator.applyStrategies(tsentence);
 			System.out.println(Arrays.toString(tsentence.translation()));
+			System.out.println(tsentence.sentenceString());
 			System.out.println("-------------------------------\n-------------------------------");
 		}
 		reader.close();
