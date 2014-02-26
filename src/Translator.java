@@ -67,6 +67,20 @@ public class Translator {
 		
 		}
 	}
+	
+	private void porBy(TaggedSentence tsentence) {
+		HashSet<String> participles = new HashSet<String>();
+		participles.add("VAP");
+		participles.add("VMP");
+		participles.add("VSP");
+		participles.add("AQ");
+		for (int i=1; i < tsentence.length(); i++) {
+			if (tsentence.getSpanish(i).equalsIgnoreCase("por") &&
+					participles.contains(tsentence.getPos(i-1))) {
+				tsentence.setEnglish(i, "by");
+			 }
+		}
+	}
 
 	public void applyStrategies(TaggedSentence taggedSentence) {
 		// apply all of the strategies!
@@ -74,6 +88,7 @@ public class Translator {
 		switchNegation(taggedSentence);
 		switchObjVerbs(taggedSentence);
 		flipQuestionWord(taggedSentence);
+		porBy(taggedSentence);
 	}
 
 	public void directTranslate(TaggedSentence tsentence) {
