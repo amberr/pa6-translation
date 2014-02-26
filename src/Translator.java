@@ -97,6 +97,36 @@ public class Translator {
 		}
 	}
 	
+	private void fixInfinitive(TaggedSentence tsentence) {
+		HashSet<String> prepositionSet = new HashSet<String>();
+		prepositionSet.add("SP");
+		
+		HashSet<String> infinSet = new HashSet<String>();
+		infinSet.add("VAN");
+		infinSet.add("VMN");
+		infinSet.add("VSN");
+		
+		// removes preposition (not 'to') before an infinitive ('for to go somewhere' vs 'to go somewhere')
+		for (int i = 0; i < tsentence.length(); i++) {
+			if (prepositionSet.contains(tsentence.getPos(i)) && infinSet.contains(tsentence.getPos(i+1))) {
+				if (!tsentence.getPos(i).contains("to ")){
+					tsentence.removeEnglish(i);
+				}
+			}
+		}
+		
+		// removes the second 'to' when two infinitives are adjacent ('to go to do something' vs 'to go do something')
+		for (int i = 0; i < tsentence.length(); i++) {
+			if (infinSet.contains(tsentence.getPos(i)) && infinSet.contains(tsentence.getPos(i+1))) {
+				String infin = tsentence.getEnglish(i + 1);
+				if (infin.contains("to ")) {
+					infin = infin.replace("to ", "");
+				}
+				tsentence.setEnglish(i + 1, infin);
+			}
+		}
+	}
+	
 	public void applyStrategies(TaggedSentence taggedSentence) {
 		// apply all of the strategies!
 		resolveQueAmbiguity(taggedSentence);
@@ -104,6 +134,7 @@ public class Translator {
 		switchNegation(taggedSentence);
 		switchObjVerbs(taggedSentence);
 		flipQuestionWord(taggedSentence);
+		fixInfinitive(taggedSentence);
 	}
 
 	public void directTranslate(TaggedSentence tsentence) {
