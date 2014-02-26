@@ -9,27 +9,13 @@ import java.io.InputStreamReader;
 public class Translator {
 	
 	private HashMap<String, String> dictionary;
+	private HashSet<String> verbSet;
 	private static Preprocessor pp;
 	
 	public Translator() throws Exception {
 		pp = new Preprocessor();
 		dictionary = new SpanishEnglishDictionary().dictionary();
-	}
-	
-	private void switchAdjNouns(TaggedSentence tsentence) {
-		HashSet<String> nounSet = new HashSet<String>();
-		nounSet.add("NC");
-		nounSet.add("NP");
-
-		HashSet<String> adjSet = new HashSet<String>();
-		adjSet.add("AQ");
-		tsentence.swapAllAdjacent(nounSet, adjSet);
-	}
-	
-	private void switchNegation(TaggedSentence tsentence) {
-		HashSet<String> negSet = new HashSet<String>();
-		negSet.add("RN");
-		HashSet<String> verbSet = new HashSet<String>();
+		verbSet = new HashSet<String>();
 		verbSet.add("VAG");
 		verbSet.add("VAI");
 		verbSet.add("VAM");
@@ -48,10 +34,32 @@ public class Translator {
 		verbSet.add("VSN");
 		verbSet.add("VSP");
 		verbSet.add("VSS");
-		
+	}
+	
+	private void switchAdjNouns(TaggedSentence tsentence) {
+		HashSet<String> nounSet = new HashSet<String>();
+		nounSet.add("NC");
+		nounSet.add("NP");
+
+		HashSet<String> adjSet = new HashSet<String>();
+		adjSet.add("AQ");
+		tsentence.swapAllAdjacent(nounSet, adjSet);
+	}
+	
+	private void switchNegation(TaggedSentence tsentence) {
+		HashSet<String> negSet = new HashSet<String>();
+		negSet.add("RN");
+
 		tsentence.swapAllAdjacent(negSet, verbSet);
 	}
 	
+	private void switchObjVerbs(TaggedSentence tsentence) {
+		HashSet<String> objSet = new HashSet<String>();
+		objSet.add("PP"); // he, she, it
+
+		tsentence.swapAllAdjacent(objSet, verbSet);
+	}
+		
 	private void flipQuestionWord(TaggedSentence taggedSentence) {
 		if (taggedSentence.isQuestion()) {
 			String firstWord = taggedSentence.getEnglish(1);
@@ -78,6 +86,7 @@ public class Translator {
 		// apply all of the strategies!
 		switchAdjNouns(taggedSentence);
 		switchNegation(taggedSentence);
+		switchObjVerbs(taggedSentence);
 		flipQuestionWord(taggedSentence);
 	}
 
