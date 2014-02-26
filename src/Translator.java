@@ -56,7 +56,8 @@ public class Translator {
 	private void switchObjVerbs(TaggedSentence tsentence) {
 		HashSet<String> objSet = new HashSet<String>();
 		objSet.add("PP"); // he, she, it
-
+		objSet.add("P0"); // reflexives
+		
 		tsentence.swapAllAdjacent(objSet, verbSet);
 	}
 		
@@ -95,6 +96,23 @@ public class Translator {
 			 }
 		}
 	}
+	
+	private void paraInOrderTo(TaggedSentence tsentence) {
+		HashSet<String> infinitives = new HashSet<String>();
+		infinitives.add("VAN");
+		infinitives.add("VMN");
+		infinitives.add("VSM");
+		for (int i=0; i < tsentence.length()-1; i++) {
+			if (tsentence.getSpanish(i).equalsIgnoreCase("para") &&
+					infinitives.contains(tsentence.getPos(i+1))) {
+				String curr_inf = tsentence.getEnglish(i+1);
+				tsentence.setEnglish(i, "to");
+				if (curr_inf.split("\\s")[0].equalsIgnoreCase("to")) {
+					tsentence.setEnglish(i+1, curr_inf.substring(3));
+				}
+			 }
+		}
+	}
 
 	public void applyStrategies(TaggedSentence taggedSentence) {
 		// apply all of the strategies!
@@ -103,6 +121,7 @@ public class Translator {
 		switchObjVerbs(taggedSentence);
 		flipQuestionWord(taggedSentence);
 		porBy(taggedSentence);
+		paraInOrderTo(taggedSentence);
 	}
 
 	public void directTranslate(TaggedSentence tsentence) {
