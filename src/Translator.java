@@ -15,6 +15,7 @@ public class Translator {
 	public Translator() throws Exception {
 		pp = new Preprocessor();
 		dictionary = new SpanishEnglishDictionary().dictionary();
+		
 		verbSet = new HashSet<String>();
 		verbSet.add("VAG");
 		verbSet.add("VAI");
@@ -133,15 +134,13 @@ public class Translator {
 		HashSet<String> prepositionSet = new HashSet<String>();
 		prepositionSet.add("SP");
 		
-		
-		
 		HashSet<String> infinSet = new HashSet<String>();
 		infinSet.add("VAN");
 		infinSet.add("VMN");
 		infinSet.add("VSN");
 		
 		// removes preposition (not 'to') before an infinitive ('for to go somewhere' vs 'to go somewhere')
-		for (int i = 0; i < tsentence.length(); i++) {
+		for (int i = 0; i < tsentence.length()-1; i++) {
 			if (prepositionSet.contains(tsentence.getPos(i)) && infinSet.contains(tsentence.getPos(i+1))) {
 				if (!tsentence.getPos(i).contains("to")){
 					tsentence.removeEnglish(i);
@@ -150,18 +149,50 @@ public class Translator {
 		}
 		
 		// removes the second 'to' when two infinitives are adjacent ('to go to do something' vs 'to go do something')
-		for (int i = 0; i < tsentence.length(); i++) {
+		for (int i = 0; i < tsentence.length()-1; i++) {
 			if (verbSet.contains(tsentence.getPos(i)) && infinSet.contains(tsentence.getPos(i+1))) {
-				String infin = tsentence.getEnglish(i + 1);
+				String infin = tsentence.getEnglish(i+1);
 				if (infin.contains("to ")) {
 					infin = infin.replace("to ", "");
 				}
-				tsentence.setEnglish(i + 1, infin);
+				tsentence.setEnglish(i+1, infin);
 			}
 		}
+		
+		HashSet<String> conjSet = new HashSet<String>();
+		conjSet.add("CC");
+		conjSet.add("CS");
+		
+		HashSet<String> puncSet = new HashSet<String>();
+		puncSet.add(".");
+
+		// removes 'to' when conjunction is between verb and infinitive 
+		// ('could not understand nor to support' vs 'could not understand nor support')
+		
+		// case1: no punctuation before conjunction 
+		for (int i = 0; i < tsentence.length()-2; i++) {
+			if (verbSet.contains(tsentence.getPos(i)) && conjSet.contains(tsentence.getPos(i+1)) 
+													  && infinSet.contains(tsentence.getPos(i+2))) {
+				String infin = tsentence.getEnglish(i+2);
+				if (infin.contains("to ")) {
+					infin = infin.replace("to ", "");
+				}
+				tsentence.setEnglish(i+2, infin);
+			}
+		}
+		// case2: punctuation is before conjunction
+		for (int i = 0; i < tsentence.length()-3; i++) {
+			if (verbSet.contains(tsentence.getPos(i)) && puncSet.contains(tsentence.getPos(i+1)) 
+					 								  && conjSet.contains(tsentence.getPos(i+2)) 
+					 								  && infinSet.contains(tsentence.getPos(i+3))) { 
+				String infin = tsentence.getEnglish(i+3);
+				if (infin.contains("to ")) {
+					infin = infin.replace("to ", "");
+				}
+				tsentence.setEnglish(i+3, infin);
+			}
+		}		
 	}
-	
-	
 	
 	public void applyStrategies(TaggedSentence taggedSentence) {
 		// apply all of the strategies!
