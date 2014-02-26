@@ -35,7 +35,7 @@ public class TaggedSentence{
 		question = false;
 		for (int i=0; i < englishArr.length; i++) {
 			sentence.add(new TaggedWord(englishArr[i], spanishArr[i], posArr[i]));
-			if (posArr[i] == "Fit") {
+			if (posArr[i].equals("Fia")) {
 				question = true;
 			}
 		}

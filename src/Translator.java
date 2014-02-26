@@ -9,9 +9,10 @@ public class Translator {
 	
 	private HashMap<String, String> dictionary;
 	private HashSet<String> verbSet;
-	private HashSet<String> objSet;
+	private static Preprocessor pp;
 	
 	public Translator() throws Exception {
+		pp = new Preprocessor();
 		dictionary = new SpanishEnglishDictionary().dictionary();
 		verbSet = new HashSet<String>();
 		verbSet.add("VAG");
@@ -32,7 +33,6 @@ public class Translator {
 		verbSet.add("VSN");
 		verbSet.add("VSP");
 		verbSet.add("VSS");
-		
 	}
 	
 	private void switchAdjNouns(TaggedSentence tsentence) {
@@ -53,10 +53,19 @@ public class Translator {
 	}
 	
 	private void switchObjVerbs(TaggedSentence tsentence) {
-		objSet = new HashSet<String>();
+		HashSet<String> objSet = new HashSet<String>();
 		objSet.add("PP"); // he, she, it
 
 		tsentence.swapAllAdjacent(objSet, verbSet);
+	}
+		
+	private void flipQuestionWord(TaggedSentence taggedSentence) {
+		if (taggedSentence.isQuestion()) {
+			String firstWord = taggedSentence.getEnglish(1);
+			String[] split = firstWord.split(" ");
+			System.out.println(Arrays.toString(pp.tagPOS(split)));
+		
+		}
 	}
 
 	public void applyStrategies(TaggedSentence taggedSentence) {
@@ -64,6 +73,7 @@ public class Translator {
 		switchAdjNouns(taggedSentence);
 		switchNegation(taggedSentence);
 		switchObjVerbs(taggedSentence);
+		flipQuestionWord(taggedSentence);
 	}
 
 	public void directTranslate(TaggedSentence tsentence) {
@@ -89,10 +99,9 @@ public class Translator {
 		// to array of English words. If the word does not exist in the dictionary, just place
 		// the Spanish word in the new array (this means its a named entity).
 		FileInputStream fr = new FileInputStream("dev_sentences.txt");
-		BufferedReader reader = new BufferedReader(new InputStreamReader(fr, "UTF-8"));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(fr));
 		String sentence = null;
 		Translator translator = new Translator();
-		Preprocessor pp = new Preprocessor();
 		while ((sentence = reader.readLine()) != null) {
 			TaggedSentence tsentence = pp.process(sentence);
 			System.out.println(Arrays.toString(tsentence.sentence()));

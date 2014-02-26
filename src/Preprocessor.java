@@ -18,6 +18,10 @@ public class Preprocessor {
 		posTagger = new POSTaggerME(posModel);
 	}
 	
+	public String[] tagPOS(String[] sentence) {
+		return posTagger.tag(sentence);
+	}
+	
 	/*
 	 * Tokenize and tag the sentence.
 	 */
