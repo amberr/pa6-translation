@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 
 public class Translator {
 	
-	public HashMap<String, String> dictionary;
+	private HashMap<String, String> dictionary;
 	
 	public Translator() throws Exception {
 		dictionary = new SpanishEnglishDictionary().dictionary();
@@ -23,10 +23,9 @@ public class Translator {
 		tsentence.swapAllAdjacent(nounSet, adjSet);
 	}
 
-	private void applyStrategies(TaggedSentence taggedSentence) {
+	public void applyStrategies(TaggedSentence taggedSentence) {
 		// apply all of the strategies!
 		switchAdjNouns(taggedSentence);
-		System.out.println(Arrays.toString(taggedSentence.sentence()));
 	}
 
 	public void directTranslate(TaggedSentence tsentence) {
