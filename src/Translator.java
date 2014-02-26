@@ -79,7 +79,6 @@ public class Translator {
 					retString += s + " ";
 				}
 				taggedSentence.setEnglish(1, retString.substring(0, retString.length() - 1));
-			}
 			
 		}
 	}
@@ -121,9 +120,16 @@ public class Translator {
 				HashSet<String> comparisonWords = new HashSet<String>();
 				comparisonWords.add("más");
 				comparisonWords.add("menos");
+				
+				HashSet<String> timeWords = new HashSet<String>(); // since, until
+				timeWords.add("desde");
+				timeWords.add("hasta");
+				
 				if ((i > 0 && comparisonWords.contains(taggedSentence.getSpanish(i-1))) ||
 					(i > 1 && comparisonWords.contains(taggedSentence.getSpanish(i-2)))) {
 					taggedSentence.setEnglish(i, "than");
+				} else if (i > 0 && timeWords.contains(taggedSentence.getSpanish(i-1))) {
+					taggedSentence.setEnglish(i, "");
 				}
 			}
 		}
