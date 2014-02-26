@@ -22,10 +22,37 @@ public class Translator {
 		adjSet.add("AQ");
 		tsentence.swapAllAdjacent(nounSet, adjSet);
 	}
+	
+	private void switchNegation(TaggedSentence tsentence) {
+		HashSet<String> negSet = new HashSet<String>();
+		negSet.add("RN");
+		HashSet<String> verbSet = new HashSet<String>();
+		verbSet.add("VAG");
+		verbSet.add("VAI");
+		verbSet.add("VAM");
+		verbSet.add("VAN");
+		verbSet.add("VAP");
+		verbSet.add("VAS");
+		verbSet.add("VMG");
+		verbSet.add("VMI");
+		verbSet.add("VMM");
+		verbSet.add("VMN");
+		verbSet.add("VMP");
+		verbSet.add("VMS");
+		verbSet.add("VSG");
+		verbSet.add("VSI");
+		verbSet.add("VSM");
+		verbSet.add("VSN");
+		verbSet.add("VSP");
+		verbSet.add("VSS");
+		
+		tsentence.swapAllAdjacent(negSet, verbSet);
+	}
 
 	public void applyStrategies(TaggedSentence taggedSentence) {
 		// apply all of the strategies!
 		switchAdjNouns(taggedSentence);
+		switchNegation(taggedSentence);
 	}
 
 	public void directTranslate(TaggedSentence tsentence) {
