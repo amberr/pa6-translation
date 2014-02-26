@@ -145,14 +145,6 @@ public class Translator {
 					taggedSentence.setEnglish(i+1, "to the");	
 				}
 				
-				
-//				HashSet<String> toWords = new HashSet<String>();
-//				toWords.add("a");
-//				toWords.add("al");
-//				if(i < taggedSentence.length() - 1 && toWords.contains(taggedSentence.getSpanish(i+1))) {
-//					taggedSentence.setEnglish(i, "due");
-//					taggedSentence.setEnglish(i+1, "to");
-//				}
 			}
 		}
 	}
