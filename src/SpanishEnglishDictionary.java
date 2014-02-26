@@ -248,7 +248,7 @@ public class SpanishEnglishDictionary {
 		map.put("términos", "terms");
 		map.put("tú", "you");
 		map.put("un", "a"); // an
-		map.put("una", "a"); // an
+		map.put("una", "one"); // an
 		map.put("uno", "one");
 		map.put("usuario", "user");
 		map.put("van", "go");
