@@ -140,7 +140,7 @@ public class TaggedSentence{
 		for(int i = 0; i < this.length(); i++) {
 			ret += this.getEnglish(i) + " ";
 		}
-		ret = ret.replaceAll("  ", " ").replaceAll(" :", ":").replaceAll(" ,", ",").replaceAll(" \\.", ".").replaceAll("\" ", "\"");
+		ret = ret.replaceAll("  ", " ").replaceAll(" \"", "\"").replaceAll(" :", ":").replaceAll(" ,", ",").replaceAll(" \\.", ".").replaceAll("\" ", "\"");
 		if (ret.charAt(0) == '\"') {
 			return ret.substring(0, 1) + Character.toUpperCase(ret.charAt(1)) + ret.substring(2);
 		} else {
