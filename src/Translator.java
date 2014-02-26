@@ -118,7 +118,7 @@ public class Translator {
 		for(int i = 0; i < taggedSentence.length(); i++) {
 			if(taggedSentence.getSpanish(i).equals("que")) {
 				HashSet<String> comparisonWords = new HashSet<String>();
-				comparisonWords.add("mï¿½s");
+				comparisonWords.add("más");
 				comparisonWords.add("menos");
 				if ((i > 0 && comparisonWords.contains(taggedSentence.getSpanish(i-1))) ||
 					(i > 1 && comparisonWords.contains(taggedSentence.getSpanish(i-2)))) {

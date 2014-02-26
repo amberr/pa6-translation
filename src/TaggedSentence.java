@@ -3,6 +3,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /*
  * Initialize this with something like:
@@ -93,7 +95,12 @@ public class TaggedSentence{
 	public void swapAllAdjacent(HashSet<String> posSet1, HashSet<String> posSet2) {
 		for (int i=0; i < sentence.size()-1; i++) {
 			if (posSet1.contains(this.getPos(i)) && posSet2.contains(this.getPos(i+1))) {
-				this.swap(i, i+1);
+				Pattern p = Pattern.compile("(^[^\\p{L}]+)");
+				Matcher m1 = p.matcher(this.getEnglish(i));
+				Matcher m2 = p.matcher(this.getEnglish(i+1));
+				if(!m1.find() && !m2.find()) {
+					this.swap(i, i+1);
+				}
 				i++; // any word only gets swapped once
 			}
 		}
