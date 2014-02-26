@@ -114,12 +114,59 @@ public class Translator {
 		}
 	}
 
+	private void resolveQueAmbiguity(TaggedSentence taggedSentence) {
+		for(int i = 0; i < taggedSentence.length(); i++) {
+			if(taggedSentence.getSpanish(i).equals("que")) {
+				HashSet<String> comparisonWords = new HashSet<String>();
+				comparisonWords.add("m�s");
+				comparisonWords.add("menos");
+				if (i > 0 && comparisonWords.contains(taggedSentence.getSpanish(i-1))) {
+					taggedSentence.setEnglish(i, "than");
+				} else if (i > 1 && comparisonWords.contains(taggedSentence.getSpanish(i-2))) {
+					taggedSentence.setEnglish(i, "than");
+				}
+			}
+		}
+	}
+	
+	private void fixInfinitive(TaggedSentence tsentence) {
+		HashSet<String> prepositionSet = new HashSet<String>();
+		prepositionSet.add("SP");
+		
+		HashSet<String> infinSet = new HashSet<String>();
+		infinSet.add("VAN");
+		infinSet.add("VMN");
+		infinSet.add("VSN");
+		
+		// removes preposition (not 'to') before an infinitive ('for to go somewhere' vs 'to go somewhere')
+		for (int i = 0; i < tsentence.length(); i++) {
+			if (prepositionSet.contains(tsentence.getPos(i)) && infinSet.contains(tsentence.getPos(i+1))) {
+				if (!tsentence.getPos(i).contains("to ")){
+					tsentence.removeEnglish(i);
+				}
+			}
+		}
+		
+		// removes the second 'to' when two infinitives are adjacent ('to go to do something' vs 'to go do something')
+		for (int i = 0; i < tsentence.length(); i++) {
+			if (infinSet.contains(tsentence.getPos(i)) && infinSet.contains(tsentence.getPos(i+1))) {
+				String infin = tsentence.getEnglish(i + 1);
+				if (infin.contains("to ")) {
+					infin = infin.replace("to ", "");
+				}
+				tsentence.setEnglish(i + 1, infin);
+			}
+		}
+	}
+	
 	public void applyStrategies(TaggedSentence taggedSentence) {
 		// apply all of the strategies!
+		resolveQueAmbiguity(taggedSentence);
 		switchAdjNouns(taggedSentence);
 		switchNegation(taggedSentence);
 		switchObjVerbs(taggedSentence);
 		flipQuestionWord(taggedSentence);
+		fixInfinitive(taggedSentence);
 		porBy(taggedSentence);
 		paraInOrderTo(taggedSentence);
 	}

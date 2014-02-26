@@ -66,6 +66,10 @@ public class TaggedSentence{
 		return sentence.get(i).englishWord;
 	}
 	
+	public void removeEnglish(int i) {
+		sentence.remove(i);
+	}
+	
 	public String getSpanish(int i) {
 		return sentence.get(i).spanishWord;
 	}
