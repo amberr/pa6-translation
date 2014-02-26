@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -62,9 +63,22 @@ public class Translator {
 	private void flipQuestionWord(TaggedSentence taggedSentence) {
 		if (taggedSentence.isQuestion()) {
 			String firstWord = taggedSentence.getEnglish(1);
-			String[] split = firstWord.split(" ");
-			System.out.println(Arrays.toString(pp.tagPOS(split)));
-		
+			String[] words = firstWord.split(" ");
+			String[] tags = pp.tagEnglishPOS(words);
+			int modalIdx = Arrays.asList(tags).indexOf("MD");
+			if (modalIdx > -1) {
+				ArrayList<String> retArr = new ArrayList<String>(Arrays.asList(words));
+				String modal = retArr.get(modalIdx);
+				retArr.remove(modalIdx);
+				retArr.add(0, modal);
+				
+				String retString = "";
+				for (String s: retArr) {
+					retString += s + " ";
+				}
+				taggedSentence.setEnglish(1, retString.substring(0, retString.length() - 1));
+			}
+			
 		}
 	}
 	
