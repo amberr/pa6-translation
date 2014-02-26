@@ -13,29 +13,29 @@ public class SpanishEnglishDictionary {
 		/* Set of words:
 		 * ------------------------------------------------------------------------------
 		["Estas, Alicia, Aquel, Carroll, Cuando, De, Debido, Desde, En, Esta, 
-		Estados, Gracias, Lewis, Limitar, Lo, Los, Siï¿½ntate, Ucrania., Unidos, 
+		Estados, Gracias, Lewis, Limitar, Lo, Los, Siéntate, Ucrania., Unidos, 
 		a, actualmente?`, adentro,, adonde, agente, al, algo, alimentos, almohada., 
-		ambiente, ansias, apetecï¿½a, aprendiendo, aprendï¿½, aquï¿½?, arduamente, arrastrado, 
-		astronï¿½micos,, asunto, autï¿½grafos, ayudar, bebidas, belleza, beneficios,, 
-		blog., bosques, botellas, cada, caldeado, calle., calma, calorï¿½as, capital, 
-		cardinales,, celebridad, champï¿½, chocolate, ciclo, ciudades, ciudï¿½d, clave, 
-		coches, colores,, comenzï¿½, comerciante, como, compaï¿½ï¿½a, con, conforme, confortable,, 
-		conocer, correspondencia,, cruzadas., cuatro, cuatros, cuï¿½n, cï¿½lculos, da, de, 
-		declarï¿½, del, dentro, desapareciï¿½, descubrir, detestaba, difundir, dirigidas, dï¿½as,, 
-		dï¿½as., e, ecolï¿½gico, el, embargo,, en, entender,, entonces, equilibrio, erguida, es, 
-		espalda, espï¿½ritu, estaba, estas, estuvieron, estï¿½, estï¿½n, explosiï¿½n, factor, familiar., 
-		fiebre, fin, fronteras, futuro, genï¿½rico, gran, habitaciones, habitan., hablarme, habï¿½a,
+		ambiente, ansias, apetecía, aprendiendo, aprendí, aquí?, arduamente, arrastrado, 
+		astronómicos,, asunto, autógrafos, ayudar, bebidas, belleza, beneficios,, 
+		blog., bosques, botellas, cada, caldeado, calle., calma, calorías, capital, 
+		cardinales,, celebridad, champú, chocolate, ciclo, ciudades, ciudád, clave, 
+		coches, colores,, comenzó, comerciante, como, compañía, con, conforme, confortable,, 
+		conocer, correspondencia,, cruzadas., cuatro, cuatros, cuán, cálculos, da, de, 
+		declaró, del, dentro, desapareció, descubrir, detestaba, difundir, dirigidas, días,, 
+		días., e, ecológico, el, embargo,, en, entender,, entonces, equilibrio, erguida, es, 
+		espalda, espíritu, estaba, estas, estuvieron, está, están, explosión, factor, familiar., 
+		fiebre, fin, fronteras, futuro, genérico, gran, habitaciones, habitan., hablarme, había,
 		hacer, haces, hasta, hija, historia, idea, imanes,, imponer,, importancia, importante, 
-		informaciï¿½n, ingesta, iniciativa, interesante, internet, la, las, le, llegarï¿½an, llevar, 
-		los, lugar, manera, manos, mantener, maravillas, mariposas, maï¿½ana, me, memoria., minutes, 
-		misma, monarca, muchas, mucho, mundo., mï¿½s, nadie, natalidad,, ni, no, o, ofrezcan, otra, 
-		otros, para, parï¿½, pasa, pedï¿½an, pelï¿½cula., pero, personas, peso, planificaciï¿½n, poco, 
-		podemos, podï¿½a, polinizador, por, precio,, preocupaba, preocupan, primera,, problema, 
-		programas, publicaciï¿½n, puntos, que, quince, residentes",, rï¿½pidas, sala, saludable., 
-		se, sentirse, sentï¿½, sido, similares, sin, social, sola, son, soportar,, su, sueï¿½os, 
-		sufren,, sugerencias., sus, tecnologï¿½as, tiempo, tiempo,, trabajando, tranquila,, tranquilo,, 
-		transmutaciï¿½n, tï¿½rminos, tï¿½, un, una, uno:, usuario, van, velocidades, ver, verificada,, 
-		vez, vida, vistosos, vital, vivï¿½a, y, ï¿½Quï¿½, ï¿½Usaremos, ï¿½ste, ï¿½ltimas, ï¿½ltimos, ï¿½tiles]
+		información, ingesta, iniciativa, interesante, internet, la, las, le, llegarían, llevar, 
+		los, lugar, manera, manos, mantener, maravillas, mariposas, mañana, me, memoria., minutes, 
+		misma, monarca, muchas, mucho, mundo., más, nadie, natalidad,, ni, no, o, ofrezcan, otra, 
+		otros, para, paró, pasa, pedían, película., pero, personas, peso, planificación, poco, 
+		podemos, podía, polinizador, por, precio,, preocupaba, preocupan, primera,, problema, 
+		programas, publicación, puntos, que, quince, residentes",, rápidas, sala, saludable., 
+		se, sentirse, sentó, sido, similares, sin, social, sola, son, soportar,, su, sueños, 
+		sufren,, sugerencias., sus, tecnologías, tiempo, tiempo,, trabajando, tranquila,, tranquilo,, 
+		transmutación, términos, tú, un, una, uno:, usuario, van, velocidades, ver, verificada,, 
+		vez, vida, vistosos, vital, vivía, y, ¿Qué, ¿Usaremos, éste, últimas, últimos, útiles]
 		*/
 		
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -55,7 +55,7 @@ public class SpanishEnglishDictionary {
 		map.put("limitar", "to limit"); // to restrict, to define
 		map.put("lo", "it"); // or him, or "that which is" or "what is" if at the beginning of a sentence
 		map.put("los", "the"); // or them
-		map.put("siï¿½ntate", "sit down"); // this is an order
+		map.put("siéntate", "sit down"); // this is an order
 		map.put("a", "to"); // into, at; also used to indicate that an action is being done to a person
 		map.put("actualmente", "at present"); // presently, currently, now, nowadays, these days
 		map.put("adentro", "inside"); // inside of, indoors
@@ -67,15 +67,15 @@ public class SpanishEnglishDictionary {
 		map.put("almohada", "pillow");
 		map.put("ambiente", "environment"); // air, atmosphere; "medio ambiente" also means environment
 		map.put("ansias", "desires"); // urges, impulses, desires, longings, wishes, depending on whether it's immediate or long-term
-		map.put("apetecÃ­a", "fancied"); // craved, lusted for
+		map.put("apetecía", "fancied"); // craved, lusted for
 		map.put("aprendiendo", "learning");
-		map.put("aprendï¿½", "I learned"); // no "I" if "yo" is already there
-		map.put("aquï¿½", "here");
+		map.put("aprendí", "I learned"); // no "I" if "yo" is already there
+		map.put("aquí", "here");
 		map.put("arduamente", "hard"); // this is an adverb
 		map.put("arrastrado", "drawn"); // dragged, hauled, pulled, etc.
-		map.put("astronÃ³micos", "astronomical"); // referring to some plural, not exclusively feminine things
+		map.put("astronómicos", "astronomical"); // referring to some plural, not exclusively feminine things
 		map.put("asunto", "issue"); // matter, subject, problem, concern
-		map.put("autÃ³grafos", "autographs");
+		map.put("autógrafos", "autographs");
 		map.put("ayudar", "to help");
 		map.put("bebidas", "beverages");
 		map.put("belleza", "beauty");
@@ -87,22 +87,22 @@ public class SpanishEnglishDictionary {
 		map.put("caldeado", "heated");
 		map.put("calle", "street");
 		map.put("calma", "calm"); // calmness, composure, unconcern
-		map.put("calorÃ­as", "calories");
+		map.put("calorías", "calories");
 		map.put("capital", "capital"); // if adj; if noun, capital or principal, stock
 		map.put("cardinales", "cardinal"); // adj modifying a plural noun
 		map.put("celebridad", "celebrity");
-		map.put("champÃº", "champagne");
+		map.put("champú", "shampoo");
 		map.put("chocolate", "chocolate");
 		map.put("ciclo", "cycle");
 		map.put("ciudades", "cities");
-		map.put("ciudÃ¡d", "city");
+		map.put("ciudád", "city");
 		map.put("clave", "key"); // code, cypher, clef, crypt
 		map.put("coches", "cars");
 		map.put("colores", "colors");
-		map.put("comenzÃ³", "began"); // started, commenced, launched; if not accompanied by pronoun/noun, refers to a he or a she
+		map.put("comenzó", "began"); // started, commenced, launched; if not accompanied by pronoun/noun, refers to a he or a she
 		map.put("comerciante", "merchant");
 		map.put("como", "like"); // as
-		map.put("compaÃ±Ã­a", "company");
+		map.put("compañía", "company");
 		map.put("con", "with");
 		map.put("conforme", "according"); // agreeable, conformant, agreed, acquiescent
 		map.put("confortable", "comfortable"); // comfy, accomodative
@@ -111,20 +111,20 @@ public class SpanishEnglishDictionary {
 		map.put("cruzadas", "crossed"); // adjective modifying plural noun
 		map.put("cuatro", "four");
 		map.put("cuatros", "four"); // modifying plural noun
-		map.put("cuÃ¡n", "how");
-		map.put("cÃ¡lculos", "calculations"); // computations, estimations, calculus
+		map.put("cuán", "how");
+		map.put("cálculos", "calculations"); // computations, estimations, calculus
 		map.put("da", "gives"); // he/she gives
-		map.put("declarÃ³", "declared"); // he/she declared
+		map.put("declaró", "declared"); // he/she declared
 		map.put("del", "of the"); // from the
 		map.put("dentro", "within"); // inside, indoors
-		map.put("desapareciÃ³", "disappeared"); // he/she disappeared
+		map.put("desapareció", "disappeared"); // he/she disappeared
 		map.put("descubrir", "to discover"); // to come upon, to expose, to find out
 		map.put("detestaba", "detested"); // hated, loathed, abhorred
 		map.put("difundir", "to spread"); // to diffuse, to transmit
 		map.put("dirigidas", "directed"); // addressed, guided, leaded; adj modifying plural noun
-		map.put("dÃ­as", "days");
+		map.put("días", "days");
 		map.put("e", "and");
-		map.put("ecolÃ³gico", "ecological");
+		map.put("ecológico", "ecological");
 		map.put("el", "the");
 		map.put("embargo", "embargo"); // sin embargo means "however", this rarely pops up not preceded by "sin"
 		map.put("entender", "understand");
@@ -133,24 +133,24 @@ public class SpanishEnglishDictionary {
 		map.put("erguida", "upright");
 		map.put("es", "is"); // it is, this is, he is, she is...
 		map.put("espalda", "back");
-		map.put("espÃ­ritu", "spirit");
+		map.put("espíritu", "spirit");
 		map.put("estaba", "was");
 		map.put("estuvieron", "were");
-		map.put("estÃ¡", "is");
-		map.put("estÃ¡n", "are");
-		map.put("explosiï¿½n", "explosion");
+		map.put("está", "is");
+		map.put("están", "are");
+		map.put("explosión", "explosion");
 		map.put("factor", "factor");
 		map.put("familiar", "family"); // also familiar
 		map.put("fiebre", "fever");
 		map.put("fin", "end");
 		map.put("fronteras", "borders");
 		map.put("futuro", "future");
-		map.put("genÃ©rico", "generic");
+		map.put("genérico", "generic");
 		map.put("gran", "great"); // large, big
 		map.put("habitaciones", "lodgings"); // habitations, rooms, accomodations
 		map.put("habitan", "inhabit"); // they inhabit
 		map.put("hablarme", "to talk to me");
-		map.put("habÃ­a", "had");
+		map.put("había", "had");
 		map.put("hacer", "to do"); // to make, to cause, etc.
 		map.put("haces", "you do");
 		map.put("hasta", "until"); // to, till, up, as far as, unto, through, even
@@ -161,7 +161,7 @@ public class SpanishEnglishDictionary {
 		map.put("imponer", "to impose");
 		map.put("importancia", "importance"); // value, magnitude	
 		map.put("importante", "important");
-		map.put("informaciÃ³n", "information");
+		map.put("información", "information");
 		map.put("ingesta", "intake");
 		map.put("iniciativa", "initiative");
 		map.put("interesante", "interesting");
@@ -169,7 +169,7 @@ public class SpanishEnglishDictionary {
 		map.put("la", "the"); // her, it; feminine
 		map.put("las", "the"); // them; plural feminine
 		map.put("le", "him"); // just as easily could be her or you
-		map.put("llegarÃ­an", "would arrive"); // would get, would reach, would catch
+		map.put("llegarían", "would arrive"); // would get, would reach, would catch
 		map.put("llevar", "to carry"); // lead, transport
 		map.put("los", "the"); // masculine plural
 		map.put("lugar", "place");
@@ -178,7 +178,7 @@ public class SpanishEnglishDictionary {
 		map.put("mantener", "to maintain"); // to sustain, to support
 		map.put("maravillas", "wonders");
 		map.put("mariposas", "butterflies");
-		map.put("maï¿½ana", "morning"); // morning if preceded by "la", otherwise tomorrow
+		map.put("mañana", "morning"); // morning if preceded by "la", otherwise tomorrow
 		map.put("me", "me");
 		map.put("memoria", "memory");
 		map.put("minutos", "minutes");
@@ -187,7 +187,7 @@ public class SpanishEnglishDictionary {
 		map.put("muchas", "many"); // plural feminine
 		map.put("mucho", "much");
 		map.put("mundo", "world");
-		map.put("mÃ¡s", "more");
+		map.put("más", "more");
 		map.put("nadie", "no one"); // but sometimes can mean anyone
 		map.put("natalidad", "birthrate");
 		map.put("ni", "nor");
@@ -197,17 +197,17 @@ public class SpanishEnglishDictionary {
 		map.put("otra", "other"); // feminine
 		map.put("otros", "others"); // masculine plural; if an adj, should be "other"
 		map.put("para", "for"); // towards, to
-		map.put("parï¿½", "stopped");
+		map.put("paró", "stopped");
 		map.put("pasa", "pass"); // passes
-		map.put("pedÃ­an", "requested");
-		map.put("pelÃ­cula", "movie");
+		map.put("pedían", "requested");
+		map.put("película", "movie");
 		map.put("pero", "but");
 		map.put("personas", "people");
 		map.put("peso", "weight");
-		map.put("planificaciï¿½n", "planning");
+		map.put("planificación", "planning");
 		map.put("poco", "little");
 		map.put("podemos", "we can"); // or just can if we is already there, or we are able to 
-		map.put("podÃ­a", "could");
+		map.put("podía", "could");
 		map.put("polinizador", "pollinator");
 		map.put("por", "for"); // by, per, to, through
 		map.put("precio", "price");
@@ -216,17 +216,17 @@ public class SpanishEnglishDictionary {
 		map.put("primera", "first");
 		map.put("problema", "problem");
 		map.put("programas", "programs");
-		map.put("publicaciÃ³n", "publication");
+		map.put("publicación", "publication");
 		map.put("puntos", "points");
 		map.put("que", "that"); // what
 		map.put("quince", "fifteen");
 		map.put("residentes", "residents");
-		map.put("rÃ¡pidas", "fast"); // adj describing plural
+		map.put("rápidas", "fast"); // adj describing plural
 		map.put("sala", "room");
 		map.put("saludable", "healthy");
 		map.put("se", "oneself"); //reflexive, usually can just get deleted
 		map.put("sentirse", "to feel");
-		map.put("sentÃ³", "sat");
+		map.put("sentó", "sat");
 		map.put("sido", "been"); // was
 		map.put("similares", "similar"); // adj describing plural
 		map.put("sin", "without");
@@ -235,18 +235,18 @@ public class SpanishEnglishDictionary {
 		map.put("son", "are");
 		map.put("soportar", "to support"); // to bear
 		map.put("su", "his"); // her, their, its, your
-		map.put("sueÃ±os", "dreams");
+		map.put("sueños", "dreams");
 		map.put("sufren", "suffer"); // they suffer
 		map.put("sugerencias", "suggestions");
 		map.put("sus", "their"); // its, your
-		map.put("tecnologÃ­as", "technologies");
+		map.put("tecnologías", "technologies");
 		map.put("tiempo", "time"); // weather
 		map.put("trabajando", "working");
 		map.put("tranquila", "quiet"); // still, smooth, calm, serene, peaceful, tranquil; feminine
 		map.put("tranquilo", "quiet"); // still, smooth, calm, serene, peaceful, tranquil; masculine
-		map.put("transmutaciÃ³n", "transmutation");
-		map.put("tÃ©rminos", "terms");
-		map.put("tï¿½", "you");
+		map.put("transmutación", "transmutation");
+		map.put("términos", "terms");
+		map.put("tú", "you");
 		map.put("un", "a"); // an
 		map.put("una", "a"); // an
 		map.put("uno", "one");
@@ -259,14 +259,14 @@ public class SpanishEnglishDictionary {
 		map.put("vida", "life");
 		map.put("vistosos", "showy");
 		map.put("vital", "vital");
-		map.put("vivÃ­a", "lived");
+		map.put("vivía", "lived");
 		map.put("y", "and");
-		map.put("quï¿½", "what");
+		map.put("qué", "what");
 		map.put("usaremos", "we will use");
-		map.put("ï¿½ste", "this");
-		map.put("Ãºltimas", "last"); // latest, most recent; adj or noun; feminine plural
-		map.put("Ãºltimos", "last"); // latest, most recent; adj or noun; masculine plural
-		map.put("ï¿½tiles", "tools");
+		map.put("éste", "this");
+		map.put("últimas", "last"); // latest, most recent; adj or noun; feminine plural
+		map.put("últimos", "last"); // latest, most recent; adj or noun; masculine plural
+		map.put("útiles", "tools");
 		map.put("ucrania", "Ukraine");
 		map.put("estados", "States");
 		map.put("unidos", "United");
