@@ -24,8 +24,8 @@ public class Preprocessor {
 	public TaggedSentence process(String sentence) {
 		ArrayList<String> tokenized = new ArrayList<String>();
 		String[] words = sentence.split("\\s");
-		for (int i=0; i < words.length; i++) {
-			Pattern p = Pattern.compile("(^[\"�,\\.]*)([^\"�?,\\.]+)([\"\\.,?:]*$)");
+		for (int i=0; i < words.length; i++) {			
+			Pattern p = Pattern.compile("(^[\"�,\\.]*)(\\p{L}+)([\"\\.,?:]*$)");
 			Matcher m = p.matcher(words[i]);
 			while(m.find()) {
 				for (int j = 1; j < 4; j++) {

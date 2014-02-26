@@ -2,7 +2,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
 public class Translator {
 	
@@ -50,8 +51,8 @@ public class Translator {
 		// for each of the first five sentences, create array of tokens, map Spanish words
 		// to array of English words. If the word does not exist in the dictionary, just place
 		// the Spanish word in the new array (this means its a named entity).
-		
-		BufferedReader reader = new BufferedReader(new FileReader("dev_sentences.txt"));
+		FileInputStream fr = new FileInputStream("dev_sentences.txt");
+		BufferedReader reader = new BufferedReader(new InputStreamReader(fr, "UTF-8"));
 		String sentence = null;
 		Translator translator = new Translator();
 		Preprocessor pp = new Preprocessor();
