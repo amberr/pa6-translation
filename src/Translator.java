@@ -133,6 +133,8 @@ public class Translator {
 		HashSet<String> prepositionSet = new HashSet<String>();
 		prepositionSet.add("SP");
 		
+		
+		
 		HashSet<String> infinSet = new HashSet<String>();
 		infinSet.add("VAN");
 		infinSet.add("VMN");
@@ -141,7 +143,7 @@ public class Translator {
 		// removes preposition (not 'to') before an infinitive ('for to go somewhere' vs 'to go somewhere')
 		for (int i = 0; i < tsentence.length(); i++) {
 			if (prepositionSet.contains(tsentence.getPos(i)) && infinSet.contains(tsentence.getPos(i+1))) {
-				if (!tsentence.getPos(i).contains("to ")){
+				if (!tsentence.getPos(i).contains("to")){
 					tsentence.removeEnglish(i);
 				}
 			}
@@ -149,7 +151,7 @@ public class Translator {
 		
 		// removes the second 'to' when two infinitives are adjacent ('to go to do something' vs 'to go do something')
 		for (int i = 0; i < tsentence.length(); i++) {
-			if (infinSet.contains(tsentence.getPos(i)) && infinSet.contains(tsentence.getPos(i+1))) {
+			if (verbSet.contains(tsentence.getPos(i)) && infinSet.contains(tsentence.getPos(i+1))) {
 				String infin = tsentence.getEnglish(i + 1);
 				if (infin.contains("to ")) {
 					infin = infin.replace("to ", "");
@@ -158,6 +160,8 @@ public class Translator {
 			}
 		}
 	}
+	
+	
 	
 	public void applyStrategies(TaggedSentence taggedSentence) {
 		// apply all of the strategies!
