@@ -8,8 +8,10 @@ import java.io.InputStreamReader;
 public class Translator {
 	
 	private HashMap<String, String> dictionary;
+	private static Preprocessor pp;
 	
 	public Translator() throws Exception {
+		pp = new Preprocessor();
 		dictionary = new SpanishEnglishDictionary().dictionary();
 	}
 	
@@ -48,11 +50,21 @@ public class Translator {
 		
 		tsentence.swapAllAdjacent(negSet, verbSet);
 	}
+	
+	private void flipQuestionWord(TaggedSentence taggedSentence) {
+		if (taggedSentence.isQuestion()) {
+			String firstWord = taggedSentence.getEnglish(1);
+			String[] split = firstWord.split(" ");
+			System.out.println(Arrays.toString(pp.tagPOS(split)));
+		
+		}
+	}
 
 	public void applyStrategies(TaggedSentence taggedSentence) {
 		// apply all of the strategies!
 		switchAdjNouns(taggedSentence);
 		switchNegation(taggedSentence);
+		flipQuestionWord(taggedSentence);
 	}
 
 	public void directTranslate(TaggedSentence tsentence) {
@@ -78,10 +90,9 @@ public class Translator {
 		// to array of English words. If the word does not exist in the dictionary, just place
 		// the Spanish word in the new array (this means its a named entity).
 		FileInputStream fr = new FileInputStream("dev_sentences.txt");
-		BufferedReader reader = new BufferedReader(new InputStreamReader(fr, "UTF-8"));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(fr));
 		String sentence = null;
 		Translator translator = new Translator();
-		Preprocessor pp = new Preprocessor();
 		while ((sentence = reader.readLine()) != null) {
 			TaggedSentence tsentence = pp.process(sentence);
 			System.out.println(Arrays.toString(tsentence.sentence()));
