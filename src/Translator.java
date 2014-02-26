@@ -82,8 +82,24 @@ public class Translator {
 		}
 	}
 
+	private void resolveQueAmbiguity(TaggedSentence taggedSentence) {
+		for(int i = 0; i < taggedSentence.length(); i++) {
+			if(taggedSentence.getSpanish(i).equals("que")) {
+				HashSet<String> comparisonWords = new HashSet<String>();
+				comparisonWords.add("más");
+				comparisonWords.add("menos");
+				if (i > 0 && comparisonWords.contains(taggedSentence.getSpanish(i-1))) {
+					taggedSentence.setEnglish(i, "than");
+				} else if (i > 1 && comparisonWords.contains(taggedSentence.getSpanish(i-2))) {
+					taggedSentence.setEnglish(i, "than");
+				}
+			}
+		}
+	}
+	
 	public void applyStrategies(TaggedSentence taggedSentence) {
 		// apply all of the strategies!
+		resolveQueAmbiguity(taggedSentence);
 		switchAdjNouns(taggedSentence);
 		switchNegation(taggedSentence);
 		switchObjVerbs(taggedSentence);
