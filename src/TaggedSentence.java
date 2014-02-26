@@ -90,6 +90,7 @@ public class TaggedSentence{
 		for (int i=0; i < sentence.size()-1; i++) {
 			if (posSet1.contains(this.getPos(i)) && posSet2.contains(this.getPos(i+1))) {
 				this.swap(i, i+1);
+				i++; // any word only gets swapped once
 			}
 		}
 	}

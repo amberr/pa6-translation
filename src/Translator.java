@@ -8,25 +8,12 @@ import java.io.InputStreamReader;
 public class Translator {
 	
 	private HashMap<String, String> dictionary;
+	private HashSet<String> verbSet;
+	private HashSet<String> objSet;
 	
 	public Translator() throws Exception {
 		dictionary = new SpanishEnglishDictionary().dictionary();
-	}
-	
-	private void switchAdjNouns(TaggedSentence tsentence) {
-		HashSet<String> nounSet = new HashSet<String>();
-		nounSet.add("NC");
-		nounSet.add("NP");
-
-		HashSet<String> adjSet = new HashSet<String>();
-		adjSet.add("AQ");
-		tsentence.swapAllAdjacent(nounSet, adjSet);
-	}
-	
-	private void switchNegation(TaggedSentence tsentence) {
-		HashSet<String> negSet = new HashSet<String>();
-		negSet.add("RN");
-		HashSet<String> verbSet = new HashSet<String>();
+		verbSet = new HashSet<String>();
 		verbSet.add("VAG");
 		verbSet.add("VAI");
 		verbSet.add("VAM");
@@ -46,13 +33,37 @@ public class Translator {
 		verbSet.add("VSP");
 		verbSet.add("VSS");
 		
+	}
+	
+	private void switchAdjNouns(TaggedSentence tsentence) {
+		HashSet<String> nounSet = new HashSet<String>();
+		nounSet.add("NC");
+		nounSet.add("NP");
+
+		HashSet<String> adjSet = new HashSet<String>();
+		adjSet.add("AQ");
+		tsentence.swapAllAdjacent(nounSet, adjSet);
+	}
+	
+	private void switchNegation(TaggedSentence tsentence) {
+		HashSet<String> negSet = new HashSet<String>();
+		negSet.add("RN");
+
 		tsentence.swapAllAdjacent(negSet, verbSet);
+	}
+	
+	private void switchObjVerbs(TaggedSentence tsentence) {
+		objSet = new HashSet<String>();
+		objSet.add("PP"); // he, she, it
+
+		tsentence.swapAllAdjacent(objSet, verbSet);
 	}
 
 	public void applyStrategies(TaggedSentence taggedSentence) {
 		// apply all of the strategies!
 		switchAdjNouns(taggedSentence);
 		switchNegation(taggedSentence);
+		switchObjVerbs(taggedSentence);
 	}
 
 	public void directTranslate(TaggedSentence tsentence) {
