@@ -88,10 +88,29 @@ public class Translator {
 				HashSet<String> comparisonWords = new HashSet<String>();
 				comparisonWords.add("más");
 				comparisonWords.add("menos");
-				if (i > 0 && comparisonWords.contains(taggedSentence.getSpanish(i-1))) {
+				if ((i > 0 && comparisonWords.contains(taggedSentence.getSpanish(i-1))) ||
+					(i > 1 && comparisonWords.contains(taggedSentence.getSpanish(i-2)))) {
 					taggedSentence.setEnglish(i, "than");
-				} else if (i > 1 && comparisonWords.contains(taggedSentence.getSpanish(i-2))) {
-					taggedSentence.setEnglish(i, "than");
+				}
+			}
+		}
+	}
+	
+	public void detectCommonPhrases(TaggedSentence taggedSentence) {
+		for(int i = 0; i < taggedSentence.length(); i++) {
+			String word = taggedSentence.getSpanish(i);
+			if(word.equals("embargo")) {
+				if(i > 0 && taggedSentence.getSpanish(i - 1).equals("sin")) {
+					taggedSentence.setEnglish(i-1, ""); // not deleting, so future loops don't get tripped up
+					taggedSentence.setEnglish(i, "however");
+				}
+			} else if(word.toLowerCase().equals("debido")) {
+				HashSet<String> toWords = new HashSet<String>();
+				toWords.add("a");
+				toWords.add("al");
+				if(i < taggedSentence.length() - 1 && toWords.contains(taggedSentence.getSpanish(i+1))) {
+					taggedSentence.setEnglish(i, "due");
+					taggedSentence.setEnglish(i+1, "to");
 				}
 			}
 		}
@@ -100,6 +119,7 @@ public class Translator {
 	public void applyStrategies(TaggedSentence taggedSentence) {
 		// apply all of the strategies!
 		resolveQueAmbiguity(taggedSentence);
+		detectCommonPhrases(taggedSentence);
 		switchAdjNouns(taggedSentence);
 		switchNegation(taggedSentence);
 		switchObjVerbs(taggedSentence);

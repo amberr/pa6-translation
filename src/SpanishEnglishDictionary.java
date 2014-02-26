@@ -41,7 +41,7 @@ public class SpanishEnglishDictionary {
 		HashMap<String, String> map = new HashMap<String, String>();
 		
 		// Named entities, not including in dict: Alicia, Carroll, Lewis, Estados, Ucrania, Unidos
-		// phrases encountered: medio ambiente, debido a, sin embargo
+		// phrases encountered: debido a, sin embargo
 		
 		map.put("estas", "these"); // feminine
 		map.put("aquel", "that"); // that one over there; farther away
