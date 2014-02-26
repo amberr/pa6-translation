@@ -134,6 +134,20 @@ public class TaggedSentence{
 
 	}
 	
+	/* Returns sentence as a String, for printing the final result! */
+	public String sentenceString() {
+		String ret = "";
+		for(int i = 0; i < this.length(); i++) {
+			ret += this.getEnglish(i) + " ";
+		}
+		ret = ret.replaceAll("  ", " ").replaceAll(" :", ":").replaceAll(" ,", ",").replaceAll(" \\.", ".").replaceAll("\" ", "\"");
+		if (ret.charAt(0) == '\"') {
+			return ret.substring(0, 1) + Character.toUpperCase(ret.charAt(1)) + ret.substring(2);
+		} else {
+			return Character.toUpperCase(ret.charAt(0)) + ret.substring(1);
+		}
+	}
+	
 	public static void main(String[] args) {
 		String[] englishArray = new String[] {"Hello", "I", "am", "a", "sentence"};
 		String[] spanishArray = new String[] {"Hello", "I", "am", "a", "sentence"};
@@ -148,12 +162,5 @@ public class TaggedSentence{
 		System.out.println(Arrays.toString(taggedSentence.sentence()));
 
   }
-//	public static void main(String[] args) {
-//		String[] englishWordArray = new String[] {"Hello", "I", "am", "a", "sentence"};
-//		String[] spanishWordArray = new String[] {"Hola", "yo", "soy", "una", "oraci�n"};
-//		String[] POSArray = new String[] {"A", "B", "C", "A", "B"};
-//		TaggedSentence taggedSentence = new TaggedSentence(spanishWordArray, englishWordArray, POSArray);
-//		taggedSentence.swapAllAdjacent("A", "B");
-//		System.out.println(Arrays.toString(taggedSentence.sentence()));
-//	}
+
 }

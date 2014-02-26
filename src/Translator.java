@@ -229,6 +229,7 @@ public class Translator {
 			translator.directTranslate(tsentence);
 			translator.applyStrategies(tsentence);
 			System.out.println(Arrays.toString(tsentence.translation()));
+			System.out.println(tsentence.sentenceString());
 			System.out.println("-------------------------------\n-------------------------------");
 		}
 		reader.close();
