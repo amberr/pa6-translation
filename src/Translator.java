@@ -56,7 +56,8 @@ public class Translator {
 	private void switchObjVerbs(TaggedSentence tsentence) {
 		HashSet<String> objSet = new HashSet<String>();
 		objSet.add("PP"); // he, she, it
-
+		objSet.add("P0"); // reflexives
+		
 		tsentence.swapAllAdjacent(objSet, verbSet);
 	}
 		
@@ -81,12 +82,43 @@ public class Translator {
 			
 		}
 	}
+	
+	private void porBy(TaggedSentence tsentence) {
+		HashSet<String> participles = new HashSet<String>();
+		participles.add("VAP");
+		participles.add("VMP");
+		participles.add("VSP");
+		participles.add("AQ");
+		for (int i=1; i < tsentence.length(); i++) {
+			if (tsentence.getSpanish(i).equalsIgnoreCase("por") &&
+					participles.contains(tsentence.getPos(i-1))) {
+				tsentence.setEnglish(i, "by");
+			 }
+		}
+	}
+	
+	private void paraInOrderTo(TaggedSentence tsentence) {
+		HashSet<String> infinitives = new HashSet<String>();
+		infinitives.add("VAN");
+		infinitives.add("VMN");
+		infinitives.add("VSM");
+		for (int i=0; i < tsentence.length()-1; i++) {
+			if (tsentence.getSpanish(i).equalsIgnoreCase("para") &&
+					infinitives.contains(tsentence.getPos(i+1))) {
+				String curr_inf = tsentence.getEnglish(i+1);
+				tsentence.setEnglish(i, "to");
+				if (curr_inf.split("\\s")[0].equalsIgnoreCase("to")) {
+					tsentence.setEnglish(i+1, curr_inf.substring(3));
+				}
+			 }
+		}
+	}
 
 	private void resolveQueAmbiguity(TaggedSentence taggedSentence) {
 		for(int i = 0; i < taggedSentence.length(); i++) {
 			if(taggedSentence.getSpanish(i).equals("que")) {
 				HashSet<String> comparisonWords = new HashSet<String>();
-				comparisonWords.add("más");
+				comparisonWords.add("mï¿½s");
 				comparisonWords.add("menos");
 				if ((i > 0 && comparisonWords.contains(taggedSentence.getSpanish(i-1))) ||
 					(i > 1 && comparisonWords.contains(taggedSentence.getSpanish(i-2)))) {
@@ -105,13 +137,52 @@ public class Translator {
 					taggedSentence.setEnglish(i, "however");
 				}
 			} else if(word.toLowerCase().equals("debido")) {
-				HashSet<String> toWords = new HashSet<String>();
-				toWords.add("a");
-				toWords.add("al");
-				if(i < taggedSentence.length() - 1 && toWords.contains(taggedSentence.getSpanish(i+1))) {
+				if(i < taggedSentence.length() - 1 && taggedSentence.getSpanish(i + 1).equals("a")) {
 					taggedSentence.setEnglish(i, "due");
 					taggedSentence.setEnglish(i+1, "to");
+				} else if (i < taggedSentence.length() - 1 && taggedSentence.getSpanish(i + 1).equals("al")) {
+					taggedSentence.setEnglish(i, "due");
+					taggedSentence.setEnglish(i+1, "to the");	
 				}
+				
+				
+//				HashSet<String> toWords = new HashSet<String>();
+//				toWords.add("a");
+//				toWords.add("al");
+//				if(i < taggedSentence.length() - 1 && toWords.contains(taggedSentence.getSpanish(i+1))) {
+//					taggedSentence.setEnglish(i, "due");
+//					taggedSentence.setEnglish(i+1, "to");
+//				}
+			}
+		}
+	}
+				
+	private void fixInfinitive(TaggedSentence tsentence) {
+		HashSet<String> prepositionSet = new HashSet<String>();
+		prepositionSet.add("SP");
+		
+		HashSet<String> infinSet = new HashSet<String>();
+		infinSet.add("VAN");
+		infinSet.add("VMN");
+		infinSet.add("VSN");
+		
+		// removes preposition (not 'to') before an infinitive ('for to go somewhere' vs 'to go somewhere')
+		for (int i = 0; i < tsentence.length(); i++) {
+			if (prepositionSet.contains(tsentence.getPos(i)) && infinSet.contains(tsentence.getPos(i+1))) {
+				if (!tsentence.getPos(i).contains("to ")){
+					tsentence.removeEnglish(i);
+				}
+			}
+		}
+		
+		// removes the second 'to' when two infinitives are adjacent ('to go to do something' vs 'to go do something')
+		for (int i = 0; i < tsentence.length(); i++) {
+			if (infinSet.contains(tsentence.getPos(i)) && infinSet.contains(tsentence.getPos(i+1))) {
+				String infin = tsentence.getEnglish(i + 1);
+				if (infin.contains("to ")) {
+					infin = infin.replace("to ", "");
+				}
+				tsentence.setEnglish(i + 1, infin);
 			}
 		}
 	}
@@ -124,6 +195,9 @@ public class Translator {
 		switchNegation(taggedSentence);
 		switchObjVerbs(taggedSentence);
 		flipQuestionWord(taggedSentence);
+		fixInfinitive(taggedSentence);
+		porBy(taggedSentence);
+		paraInOrderTo(taggedSentence);
 	}
 
 	public void directTranslate(TaggedSentence tsentence) {
