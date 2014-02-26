@@ -9,17 +9,25 @@ import opennlp.tools.postag.POSTaggerME;
 
 
 public class Preprocessor {	
-	private POSModel posModel;
-	private POSTaggerME posTagger;
+	private POSModel englishPosModel;
+	private POSModel spanishPosModel;
+	private POSTaggerME englishPosTagger;
+	private POSTaggerME spanishPosTagger;
 	
 	public Preprocessor() throws Exception {
-		InputStream modelIn = new FileInputStream("opennlp-es-pos-maxent-pos-universal.model");
-		posModel = new POSModel(modelIn);
-		posTagger = new POSTaggerME(posModel);
+		// Spanish tagset: http://www.lsi.upc.edu/~nlp/SVMTool/parole.html
+		InputStream spanishModelIn = new FileInputStream("opennlp-es-pos-maxent-pos-universal.model");
+		spanishPosModel = new POSModel(spanishModelIn);
+		spanishPosTagger = new POSTaggerME(spanishPosModel);
+		
+		// English tagset: http://blog.dpdearing.com/2011/12/opennlp-part-of-speech-pos-tags-penn-english-treebank/
+		InputStream englishModelIn = new FileInputStream("en-pos-maxent.bin");
+		englishPosModel = new POSModel(englishModelIn);
+		englishPosTagger = new POSTaggerME(englishPosModel);
 	}
 	
-	public String[] tagPOS(String[] sentence) {
-		return posTagger.tag(sentence);
+	public String[] tagEnglishPOS(String[] sentence) {
+		return englishPosTagger.tag(sentence);
 	}
 	
 	/*
@@ -41,7 +49,7 @@ public class Preprocessor {
 		}
 		String[] spanishArr = new String[tokenized.size()];
 		tokenized.toArray(spanishArr);
-		String[] posArr = posTagger.tag(spanishArr);
+		String[] posArr = spanishPosTagger.tag(spanishArr);
 	//	System.out.println(Arrays.toString(posArr));
 		return new TaggedSentence(spanishArr, posArr);
 	}	
