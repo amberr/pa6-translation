@@ -10,6 +10,9 @@ public class Translator {
 	
 	private HashMap<String, String> dictionary;
 	private HashSet<String> verbSet;
+	private HashSet<String> pronounSet;
+	HashSet<String> nounSet;
+	HashSet<String> conjSet;
 	private static Preprocessor pp;
 	
 	public Translator() throws Exception {
@@ -35,13 +38,28 @@ public class Translator {
 		verbSet.add("VSN");
 		verbSet.add("VSP");
 		verbSet.add("VSS");
+		
+		pronounSet = new HashSet<String>();
+		pronounSet.add("P0");
+		pronounSet.add("PD");
+		pronounSet.add("PE");
+		pronounSet.add("PI");
+		pronounSet.add("PN");
+		pronounSet.add("PP");
+		pronounSet.add("PR");
+		pronounSet.add("PT");
+		pronounSet.add("PX");
+		
+		nounSet = new HashSet<String>();
+		nounSet.add("NC");
+		nounSet.add("NP");
+		
+		conjSet = new HashSet<String>();
+		conjSet.add("CC");
+		conjSet.add("CS");
 	}
 	
 	private void switchAdjNouns(TaggedSentence tsentence) {
-		HashSet<String> nounSet = new HashSet<String>();
-		nounSet.add("NC");
-		nounSet.add("NP");
-
 		HashSet<String> adjSet = new HashSet<String>();
 		adjSet.add("AQ");
 		tsentence.swapAllAdjacent(nounSet, adjSet);
@@ -185,10 +203,6 @@ public class Translator {
 			}
 		}
 		
-		HashSet<String> conjSet = new HashSet<String>();
-		conjSet.add("CC");
-		conjSet.add("CS");
-		
 		HashSet<String> puncSet = new HashSet<String>();
 		puncSet.add(".");
 
@@ -220,17 +234,45 @@ public class Translator {
 		}		
 	}
 	
-	public void applyStrategies(TaggedSentence taggedSentence) {
+	public void addPronounToVerb(TaggedSentence tsentence) {
+		HashSet<String> pronounVerbSet = new HashSet<String>();
+		pronounVerbSet.add("VAI");
+		pronounVerbSet.add("VMI");
+		pronounVerbSet.add("VSI");
+		pronounVerbSet.add("VAP");
+		pronounVerbSet.add("VMP");
+		pronounVerbSet.add("VSP");
+		pronounVerbSet.add("VAS");
+		pronounVerbSet.add("VMS");
+		pronounVerbSet.add("VSS");
+		
+		for (int i = 1; i < tsentence.length()-1; i++) {
+			if (pronounVerbSet.contains(tsentence.getPos(i)) && !nounSet.contains(tsentence.getPos(i-1)) 
+															 && !pronounSet.contains(tsentence.getPos(i-1)) 
+															 && !pronounSet.contains(tsentence.getPos(i+1))
+															 && !tsentence.getEnglish(i-1).contains("\"") 
+															 && !tsentence.getEnglish(i+1).contains("\"") 
+															 ) {
+				tsentence.setEnglish(i, "it " + tsentence.getEnglish(i));
+			} 
+		}
+	}
+	
+	public void applyStrategies(TaggedSentence tsentence) {
 		// apply all of the strategies!
-		resolveQueAmbiguity(taggedSentence);
-		detectCommonPhrases(taggedSentence);
-		switchAdjNouns(taggedSentence);
-		switchNegation(taggedSentence);
-		switchObjVerbs(taggedSentence);
-		flipQuestionWord(taggedSentence);
-		fixInfinitive(taggedSentence);
-		porBy(taggedSentence);
-		paraInOrderTo(taggedSentence);
+		resolveQueAmbiguity(tsentence);
+		detectCommonPhrases(tsentence);
+		switchAdjNouns(tsentence);
+		switchNegation(tsentence);
+		switchObjVerbs(tsentence);
+		flipQuestionWord(tsentence);
+		fixInfinitive(tsentence);
+		porBy(tsentence);
+		paraInOrderTo(tsentence);
+		addPronounToVerb(tsentence);
+		
+		if (tsentence.getEnglish(0).equals("¿"))
+			tsentence.removeEnglish(0);
 	}
 
 	public void directTranslate(TaggedSentence tsentence) {
@@ -268,6 +310,7 @@ public class Translator {
 			System.out.println(Arrays.toString(tsentence.translation()));
 			System.out.println(tsentence.sentenceString());
 			System.out.println("-------------------------------\n-------------------------------");
+			System.out.println();
 		}
 		reader.close();
 	}
