@@ -79,7 +79,7 @@ public class Translator {
 					retString += s + " ";
 				}
 				taggedSentence.setEnglish(1, retString.substring(0, retString.length() - 1));
-			
+			}
 		}
 	}
 	
