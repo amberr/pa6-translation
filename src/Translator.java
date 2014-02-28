@@ -246,15 +246,27 @@ public class Translator {
 		pronounVerbSet.add("VMS");
 		pronounVerbSet.add("VSS");
 		
-		for (int i = 1; i < tsentence.length()-1; i++) {
+		for (int i = 2; i < tsentence.length()-1; i++) {
 			if (pronounVerbSet.contains(tsentence.getPos(i)) && !nounSet.contains(tsentence.getPos(i-1)) 
+									 						 && !nounSet.contains(tsentence.getPos(i-2))
 															 && !pronounSet.contains(tsentence.getPos(i-1)) 
 															 && !pronounSet.contains(tsentence.getPos(i+1))
 															 && !tsentence.getEnglish(i-1).contains("\"") 
 															 && !tsentence.getEnglish(i+1).contains("\"") 
-															 && (!tsentence.isQuestion() && i == 1)) {
+															 ) {
 				tsentence.setEnglish(i, "it " + tsentence.getEnglish(i));
 			} 
+		}
+		
+		// check first words
+		int i = 1;
+		if (pronounVerbSet.contains(tsentence.getPos(i)) && !nounSet.contains(tsentence.getPos(i-1))
+														 && !pronounSet.contains(tsentence.getPos(i-1))
+														 && !tsentence.getEnglish(i-1).contains("\"") 
+													     && !tsentence.getEnglish(i+1).contains("\"")
+													     && ((!tsentence.isQuestion()) )
+													     ) {
+			tsentence.setEnglish(i, "it " + tsentence.getEnglish(i));
 		}
 	}
 	
@@ -297,7 +309,7 @@ public class Translator {
 		// for each of the first five sentences, create array of tokens, map Spanish words
 		// to array of English words. If the word does not exist in the dictionary, just place
 		// the Spanish word in the new array (this means its a named entity).
-		FileInputStream fr = new FileInputStream("test_sentences.txt");
+		FileInputStream fr = new FileInputStream("dev_sentences.txt");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(fr));
 		String sentence = null;
 		Translator translator = new Translator();
