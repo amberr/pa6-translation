@@ -259,8 +259,21 @@ public class Translator {
 		}
 	}
 	
+	private void removeReflexive(TaggedSentence tsentence) {
+		for (int i = 0; i < tsentence.length() - 1; i++) {
+			if (tsentence.getSpanish(i).equalsIgnoreCase("me") &&
+				verbSet.contains(tsentence.getPos(i+1))) {
+				String[] words = tsentence.getEnglish(i+1).split("\\s");
+				if(Arrays.asList(words).contains("I")) {
+					tsentence.setEnglish(i, "");
+				}
+			}
+		}	
+	}
+	
 	public void applyStrategies(TaggedSentence tsentence) {
 		// apply all of the strategies!
+		removeReflexive(tsentence);
 		resolveQueAmbiguity(tsentence);
 		detectCommonPhrases(tsentence);
 		switchAdjNouns(tsentence);
@@ -298,7 +311,7 @@ public class Translator {
 		// for each of the first five sentences, create array of tokens, map Spanish words
 		// to array of English words. If the word does not exist in the dictionary, just place
 		// the Spanish word in the new array (this means its a named entity).
-		FileInputStream fr = new FileInputStream("dev_sentences.txt");
+		FileInputStream fr = new FileInputStream("test_sentences.txt");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(fr));
 		String sentence = null;
 		Translator translator = new Translator();
