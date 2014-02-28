@@ -192,16 +192,16 @@ public class Translator {
 			}
 		}
 		
-		// removes the second 'to' when two infinitives are adjacent ('to go to do something' vs 'to go do something')
-		for (int i = 0; i < tsentence.length()-1; i++) {
-			if (verbSet.contains(tsentence.getPos(i)) && infinSet.contains(tsentence.getPos(i+1))) {
-				String infin = tsentence.getEnglish(i+1);
-				if (infin.contains("to ")) {
-					infin = infin.replace("to ", "");
-				}
-				tsentence.setEnglish(i+1, infin);
-			}
-		}
+//		// removes the second 'to' when two infinitives are adjacent ('to go to do something' vs 'to go do something')
+//		for (int i = 0; i < tsentence.length()-1; i++) {
+//			if (verbSet.contains(tsentence.getPos(i)) && infinSet.contains(tsentence.getPos(i+1))) {
+//				String infin = tsentence.getEnglish(i+1);
+//				if (infin.contains("to ")) {
+//					infin = infin.replace("to ", "");
+//				}
+//				tsentence.setEnglish(i+1, infin);
+//			}
+//		}
 		
 		HashSet<String> puncSet = new HashSet<String>();
 		puncSet.add(".");
