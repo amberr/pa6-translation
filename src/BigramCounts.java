@@ -10,7 +10,7 @@ public class BigramCounts {
 	
 	public BigramCounts() throws Exception {
 		counts = new HashMap<String, Integer>();
-		FileInputStream fr = new FileInputStream("bigrams.txt");
+		FileInputStream fr = new FileInputStream("Corpus/bigrams.txt");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(fr));
 		String line = null;
 		while ((line = reader.readLine()) != null) {
