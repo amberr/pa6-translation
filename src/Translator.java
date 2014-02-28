@@ -139,9 +139,10 @@ public class Translator {
 				comparisonWords.add("más");
 				comparisonWords.add("menos");
 				
-				HashSet<String> timeWords = new HashSet<String>(); // since, until
+				HashSet<String> timeWords = new HashSet<String>(); // since, until, while
 				timeWords.add("desde");
 				timeWords.add("hasta");
+				timeWords.add("mientras");
 				
 				if ((i > 0 && comparisonWords.contains(taggedSentence.getSpanish(i-1))) ||
 					(i > 1 && comparisonWords.contains(taggedSentence.getSpanish(i-2)))) {
@@ -297,7 +298,7 @@ public class Translator {
 		// for each of the first five sentences, create array of tokens, map Spanish words
 		// to array of English words. If the word does not exist in the dictionary, just place
 		// the Spanish word in the new array (this means its a named entity).
-		FileInputStream fr = new FileInputStream("test_sentences.txt");
+		FileInputStream fr = new FileInputStream("dev_sentences.txt");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(fr));
 		String sentence = null;
 		Translator translator = new Translator();
