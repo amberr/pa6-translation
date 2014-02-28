@@ -105,7 +105,7 @@ public class TaggedSentence{
 		Pattern p = Pattern.compile("(^[^\\p{L}]+)");
 		Matcher m1 = p.matcher(this.getEnglish(i));
 		Matcher m2 = p.matcher(this.getEnglish(i+1));
-		if(!m1.find() && !m2.find()) {
+		if(!m1.find() && !m2.find() && count2 >= count1) {
 			Collections.swap(sentence, i, j);
 		}
 		
