@@ -139,9 +139,10 @@ public class Translator {
 				comparisonWords.add("más");
 				comparisonWords.add("menos");
 				
-				HashSet<String> timeWords = new HashSet<String>(); // since, until
+				HashSet<String> timeWords = new HashSet<String>(); // since, until, while
 				timeWords.add("desde");
 				timeWords.add("hasta");
+				timeWords.add("mientras");
 				
 				if ((i > 0 && comparisonWords.contains(taggedSentence.getSpanish(i-1))) ||
 					(i > 1 && comparisonWords.contains(taggedSentence.getSpanish(i-2)))) {
