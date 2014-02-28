@@ -247,15 +247,27 @@ public class Translator {
 		pronounVerbSet.add("VMS");
 		pronounVerbSet.add("VSS");
 		
-		for (int i = 1; i < tsentence.length()-1; i++) {
+		for (int i = 2; i < tsentence.length()-1; i++) {
 			if (pronounVerbSet.contains(tsentence.getPos(i)) && !nounSet.contains(tsentence.getPos(i-1)) 
+									 						 && !nounSet.contains(tsentence.getPos(i-2))
 															 && !pronounSet.contains(tsentence.getPos(i-1)) 
 															 && !pronounSet.contains(tsentence.getPos(i+1))
 															 && !tsentence.getEnglish(i-1).contains("\"") 
 															 && !tsentence.getEnglish(i+1).contains("\"") 
-															 && (!tsentence.isQuestion() && i == 1)) {
+															 ) {
 				tsentence.setEnglish(i, "it " + tsentence.getEnglish(i));
 			} 
+		}
+		
+		// check first words
+		int i = 1;
+		if (pronounVerbSet.contains(tsentence.getPos(i)) && !nounSet.contains(tsentence.getPos(i-1))
+														 && !pronounSet.contains(tsentence.getPos(i-1))
+														 && !tsentence.getEnglish(i-1).contains("\"") 
+													     && !tsentence.getEnglish(i+1).contains("\"")
+													     && ((!tsentence.isQuestion()) )
+													     ) {
+			tsentence.setEnglish(i, "it " + tsentence.getEnglish(i));
 		}
 	}
 	
