@@ -6,7 +6,9 @@ import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/*
+/* Data structure to store a Spanish sentence, its POS tags, and its ongoing
+ * English translation
+ * -------------------------------------------------------------------------
  * Initialize this with something like:
  * TaggedSentence taggedSentence = new TaggedSentence(wordArray, POSArray);
  * where wordArray and POSArray are arrays of translated words and corresponding
@@ -88,6 +90,9 @@ public class TaggedSentence{
 		sentence.get(i).englishWord = word;
 	}
 	
+	/* The bigram count strategy!
+	 * Vetos a swap if it does not produce a bigram with greater probability than the original
+	 */
 	public void swap(int i, int j) {
 		
 		

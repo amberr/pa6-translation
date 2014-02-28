@@ -7,7 +7,9 @@ import java.util.regex.Pattern;
 import opennlp.tools.postag.POSModel;
 import opennlp.tools.postag.POSTaggerME;
 
-
+/* Preprocess a sentence by tokenizing it and POS tagging.
+ * 
+ */
 public class Preprocessor {	
 	private POSModel englishPosModel;
 	private POSModel spanishPosModel;

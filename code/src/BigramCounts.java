@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/* A class to read in bigram counts from http://www.ngrams.info */
 public class BigramCounts {
 	
 	private HashMap<String, Integer> counts;
@@ -21,6 +22,7 @@ public class BigramCounts {
 		}
 	}
 	
+	/* Returns the number of bigrams matching the bigram passed in */
 	public int numBigrams(String[] bigram) {
 		if(!counts.containsKey(Arrays.toString(bigram))) {
 			return 0;

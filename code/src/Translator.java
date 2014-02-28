@@ -59,12 +59,18 @@ public class Translator {
 		conjSet.add("CS");
 	}
 	
+	/* Swap adj/noun strategy
+	 * ---------------------------------------------
+	 */
 	private void switchAdjNouns(TaggedSentence tsentence) {
 		HashSet<String> adjSet = new HashSet<String>();
 		adjSet.add("AQ");
 		tsentence.swapAllAdjacent(nounSet, adjSet);
 	}
 	
+	/* Swap negation/verb strategy
+	 * ---------------------------------------------
+	 */
 	private void switchNegation(TaggedSentence tsentence) {
 		HashSet<String> negSet = new HashSet<String>();
 		negSet.add("RN");
@@ -72,6 +78,9 @@ public class Translator {
 		tsentence.swapAllAdjacent(negSet, verbSet);
 	}
 	
+	/* Swap object/verb strategy
+	 * ---------------------------------------------
+	 */
 	private void switchObjVerbs(TaggedSentence tsentence) {
 		HashSet<String> objSet = new HashSet<String>();
 		objSet.add("PP"); // he, she, it
@@ -80,6 +89,9 @@ public class Translator {
 		tsentence.swapAllAdjacent(objSet, verbSet);
 	}
 		
+	/* Strategy to flip the verb and object in a question
+	 * ---------------------------------------------
+	 */
 	private void flipQuestionWord(TaggedSentence taggedSentence) {
 		if (taggedSentence.isQuestion()) {
 			String firstWord = taggedSentence.getEnglish(1);
@@ -101,6 +113,9 @@ public class Translator {
 		}
 	}
 	
+	/* Strategy to detect best translation for "por"
+	 * ---------------------------------------------
+	 */
 	private void porBy(TaggedSentence tsentence) {
 		HashSet<String> participles = new HashSet<String>();
 		participles.add("VAP");
@@ -115,6 +130,9 @@ public class Translator {
 		}
 	}
 	
+	/* Strategy to detect best translation for "para"
+	 * ---------------------------------------------
+	 */
 	private void paraInOrderTo(TaggedSentence tsentence) {
 		HashSet<String> infinitives = new HashSet<String>();
 		infinitives.add("VAN");
@@ -132,6 +150,9 @@ public class Translator {
 		}
 	}
 
+	/* Resolve ambiguity with the word "Que" Strategy
+	 * ----------------------------------------------
+	 */
 	private void resolveQueAmbiguity(TaggedSentence taggedSentence) {
 		for(int i = 0; i < taggedSentence.length(); i++) {
 			if(taggedSentence.getSpanish(i).equals("que")) {
@@ -154,6 +175,9 @@ public class Translator {
 		}
 	}
 	
+	/* Detect Common Phrases Strategy
+	 * ------------------------------
+	 */
 	public void detectCommonPhrases(TaggedSentence taggedSentence) {
 		for(int i = 0; i < taggedSentence.length(); i++) {
 			String word = taggedSentence.getSpanish(i);
@@ -174,7 +198,10 @@ public class Translator {
 			}
 		}
 	}
-				
+		
+	/* Fix Infinitive Strategy
+	 * -----------------------
+	 */
 	private void fixInfinitive(TaggedSentence tsentence) {
 		HashSet<String> prepositionSet = new HashSet<String>();
 		prepositionSet.add("SP");
@@ -192,17 +219,6 @@ public class Translator {
 				}
 			}
 		}
-		
-//		// removes the second 'to' when two infinitives are adjacent ('to go to do something' vs 'to go do something')
-//		for (int i = 0; i < tsentence.length()-1; i++) {
-//			if (verbSet.contains(tsentence.getPos(i)) && infinSet.contains(tsentence.getPos(i+1))) {
-//				String infin = tsentence.getEnglish(i+1);
-//				if (infin.contains("to ")) {
-//					infin = infin.replace("to ", "");
-//				}
-//				tsentence.setEnglish(i+1, infin);
-//			}
-//		}
 		
 		HashSet<String> puncSet = new HashSet<String>();
 		puncSet.add(".");
@@ -234,7 +250,10 @@ public class Translator {
 			}
 		}		
 	}
-	
+
+	/* Add pronoun to verb strategy
+	 * ---------------------------
+	 */
 	public void addPronounToVerb(TaggedSentence tsentence) {
 		HashSet<String> pronounVerbSet = new HashSet<String>();
 		pronounVerbSet.add("VAI");
@@ -271,6 +290,9 @@ public class Translator {
 		}
 	}
 	
+	/* Remove reflexive strategy
+	 * -------------------------
+	 */
 	private void removeReflexive(TaggedSentence tsentence) {
 		for (int i = 0; i < tsentence.length() - 1; i++) {
 			if (tsentence.getSpanish(i).equalsIgnoreCase("me") &&
@@ -284,7 +306,7 @@ public class Translator {
 	}
 	
 	public void applyStrategies(TaggedSentence tsentence) {
-		// apply all of the strategies!
+		// Apply all of the strategies!
 		removeReflexive(tsentence);
 		resolveQueAmbiguity(tsentence);
 		detectCommonPhrases(tsentence);
@@ -301,6 +323,9 @@ public class Translator {
 			tsentence.removeEnglish(0);
 	}
 
+	/* Takes array of tokenized Spanish words, and creates array of corresponding
+	 * English words from SpanishEnglishDictionary. Stores this in a TaggedSentence.
+	 */
 	public void directTranslate(TaggedSentence tsentence) {
 		String[] spanishWords = tsentence.sentence();
 		String[] englishWords = new String[spanishWords.length];
@@ -311,33 +336,26 @@ public class Translator {
 				englishWords[i] = englishWord;
 			} else {
 				englishWords[i] = spanishWords[i];
-				//System.out.println(spanishWord);
 			}
 		}
-		//System.out.println(Arrays.toString(englishWords));
 		tsentence.addEnglishWords(englishWords);
 	}
 	
 	
+	/* Reads in dev or test file, then performs direct translation, and then
+	 * applies strategies and prints out the result.
+	 */
 	public static void main(String[] args) throws Exception {
-		// for each of the first five sentences, create array of tokens, map Spanish words
-		// to array of English words. If the word does not exist in the dictionary, just place
-		// the Spanish word in the new array (this means its a named entity).
 		FileInputStream fr = new FileInputStream("../corpus/dev_sentences.txt");
 //		FileInputStream fr = new FileInputStream("../corpus/test_sentences.txt");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(fr));
 		String sentence = null;
 		Translator translator = new Translator();
 		while ((sentence = reader.readLine()) != null) {
-			TaggedSentence tsentence = pp.process(sentence);
-			System.out.println(Arrays.toString(tsentence.sentence()));
-			System.out.println(Arrays.toString(tsentence.tags()));
+			TaggedSentence tsentence = pp.process(sentence); // see Preprocessor
 			translator.directTranslate(tsentence);
 			translator.applyStrategies(tsentence);
-			System.out.println(Arrays.toString(tsentence.translation()));
 			System.out.println(tsentence.sentenceString());
-			System.out.println("-------------------------------\n-------------------------------");
-			System.out.println();
 		}
 		reader.close();
 	}
