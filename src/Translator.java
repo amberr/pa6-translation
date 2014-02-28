@@ -252,7 +252,7 @@ public class Translator {
 															 && !pronounSet.contains(tsentence.getPos(i+1))
 															 && !tsentence.getEnglish(i-1).contains("\"") 
 															 && !tsentence.getEnglish(i+1).contains("\"") 
-															 ) {
+															 && (!tsentence.isQuestion() && i == 1)) {
 				tsentence.setEnglish(i, "it " + tsentence.getEnglish(i));
 			} 
 		}
