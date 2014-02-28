@@ -27,8 +27,12 @@ public class TaggedSentence{
 	
 	private ArrayList<TaggedWord> sentence;
 	private boolean question;
+	private BigramCounts bigramCounts;
 	
-	public TaggedSentence(String[] englishArr, String[] spanishArr, String[] posArr) {
+	public TaggedSentence(String[] englishArr, String[] spanishArr, String[] posArr) throws Exception {
+		
+		bigramCounts = new BigramCounts();
+		
 		if ((englishArr.length != spanishArr.length) ||
 			(englishArr.length != posArr.length)) {
 			throw new IllegalArgumentException("Arrays must be of same length");
@@ -43,7 +47,7 @@ public class TaggedSentence{
 		}
 	}
 	
-	public TaggedSentence(String[] spanishArr, String[] posArr) {
+	public TaggedSentence(String[] spanishArr, String[] posArr) throws Exception {
 		this(new String[spanishArr.length], spanishArr, posArr);
 	}
 	
@@ -95,10 +99,21 @@ public class TaggedSentence{
 	public void swapAllAdjacent(HashSet<String> posSet1, HashSet<String> posSet2) {
 		for (int i=0; i < sentence.size()-1; i++) {
 			if (posSet1.contains(this.getPos(i)) && posSet2.contains(this.getPos(i+1))) {
+				
+				String[] bigram1 = new String[2];
+				bigram1[0] = this.getEnglish(i).toLowerCase();
+				bigram1[1] = this.getEnglish(i+1).toLowerCase();
+				int count1 = bigramCounts.numBigrams(bigram1);
+				
+				String[] bigram2 = new String[2];
+				bigram2[0] = this.getEnglish(i+1).toLowerCase();
+				bigram2[1] = this.getEnglish(i).toLowerCase();
+				int count2 = bigramCounts.numBigrams(bigram2);
+				
 				Pattern p = Pattern.compile("(^[^\\p{L}]+)");
 				Matcher m1 = p.matcher(this.getEnglish(i));
 				Matcher m2 = p.matcher(this.getEnglish(i+1));
-				if(!m1.find() && !m2.find()) {
+				if(!m1.find() && !m2.find() && count2 >= count1) {
 					this.swap(i, i+1);
 				}
 				i++; // any word only gets swapped once
@@ -148,7 +163,7 @@ public class TaggedSentence{
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		String[] englishArray = new String[] {"Hello", "I", "am", "a", "sentence"};
 		String[] spanishArray = new String[] {"Hello", "I", "am", "a", "sentence"};
 		String[] POSArray = new String[] {"A", "B", "C", "A", "B"};

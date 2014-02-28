@@ -33,7 +33,7 @@ public class Preprocessor {
 	/*
 	 * Tokenize and tag the sentence.
 	 */
-	public TaggedSentence process(String sentence) {
+	public TaggedSentence process(String sentence) throws Exception {
 		ArrayList<String> tokenized = new ArrayList<String>();
 		String[] words = sentence.split("\\s");
 		for (int i=0; i < words.length; i++) {			
